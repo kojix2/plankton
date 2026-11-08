@@ -255,7 +255,7 @@ module Hydra
   end
 
   def self.emit : Nil
-    raise ArgumentError.new("No output: finish a texture chain with .out") if @@graph.outputs.all?(&.nil?)
+    raise ArgumentError.new("No output: finish a texture chain with .out") if @@graph.outputs.all?(Nil)
     puts SENTINEL + @@graph.to_json
   end
 

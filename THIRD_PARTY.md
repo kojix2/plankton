@@ -13,9 +13,6 @@ MIT license as replacing the licenses of LLVM, LLD, Crystal, WASI and other
 bundled components. See the package's own notices for authoritative attribution.
 The explicit CDN build loads that same fixed package version from jsDelivr.
 
-Ameba 1.6.4 is a development-only MIT-licensed dependency:
-https://github.com/crystal-ameba/ameba/tree/v1.6.4
-
 Playwright Test 1.65.0 is a development-only Apache-2.0-licensed dependency:
 https://github.com/microsoft/playwright
 It is used for browser regression tests and is not copied into the built site.
