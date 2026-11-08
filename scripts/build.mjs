@@ -45,15 +45,8 @@ if (!cdn) {
     // Keep upstream modules, WASI assets and all license notices together.
     await cp(compiler, path.join(target, 'vendor/crystal'), { recursive: true });
 }
-for (const name of ['LICENSE', 'THIRD_PARTY.md']) {
-    try {
-        await cp(path.join(root, name), path.join(target, name));
-    }
-    catch (error) {
-        if (error.code !== 'ENOENT')
-            throw error;
-    }
-}
+for (const name of ['LICENSE', 'README.md'])
+    await cp(path.join(root, name), path.join(target, name));
 await writeFile(path.join(target, '.nojekyll'), '');
 await writeFile(path.join(target, 'build.json'), JSON.stringify({ app: pkg.version, compiler: version, mode: cdn ? 'cdn' : 'local' }));
 console.log(`Built dist (${cdn ? 'explicit CDN compiler; network required on Run' : 'same-origin compiler and assets'}).`);
