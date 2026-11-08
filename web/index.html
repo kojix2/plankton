@@ -50,36 +50,40 @@
     </section>
     <div id="splitter" class="splitter" role="separator" aria-orientation="vertical" aria-valuemin="28" aria-valuemax="65" aria-valuenow="44" tabindex="0" data-i18n-aria="resizePanels"></div>
     <section class="view-panel" aria-label="Visual output" data-i18n-aria="view">
-      <div class="panel-heading view-heading">
-        <div class="view-label"><strong data-i18n="view">Output</strong><span id="view-badge" class="badge" data-i18n="preview">Preset preview</span></div>
-        <div class="view-actions"><span id="fps">— fps</span><button id="fullscreen-button" class="icon-button" data-i18n-title="fullscreen" data-i18n-aria="fullscreen">⛶</button></div>
+      <div class="view-main">
+        <div class="panel-heading view-heading">
+          <div class="view-label"><strong data-i18n="view">Output</strong><span id="view-badge" class="badge" data-i18n="preview">Preset preview</span></div>
+          <div class="view-actions"><span id="fps">— fps</span><button id="fullscreen-button" class="icon-button" data-i18n-title="fullscreen" data-i18n-aria="fullscreen">⛶</button></div>
+        </div>
+        <div class="canvas-stage" id="canvas-stage">
+          <canvas id="view" width="960" height="540" data-i18n-aria="view" aria-label="Visual output"></canvas>
+          <div id="gpu-error" class="gpu-error" hidden></div>
+        </div>
+        <div class="stage-info"><span id="canvas-resolution">960 × 540</span><span id="scene-time">00:00</span></div>
+        <div class="transport">
+          <div class="transport-left"><button id="pause-button" data-i18n="pause">Pause</button><button id="reset-button" class="quiet" data-i18n="reset">Reset</button><label class="select-label"><span data-i18n="output">Buffer</span><select id="output-select" aria-label="Output buffer" data-i18n-aria="output"><option>o0</option><option>o1</option><option>o2</option><option>o3</option></select></label></div>
+          <div class="transport-right"><label class="select-label"><span class="sr-only" data-i18n="resolution">Resolution</span><select id="resolution" aria-label="Resolution" data-i18n-aria="resolution"><option value="540">540p</option><option value="720" selected>720p</option><option value="1080">1080p</option></select></label><button id="snapshot-button" class="quiet" data-i18n="snapshot">PNG</button></div>
+        </div>
       </div>
-      <div class="canvas-stage" id="canvas-stage">
-        <canvas id="view" width="960" height="540" data-i18n-aria="view" aria-label="Visual output"></canvas>
-        <div id="gpu-error" class="gpu-error" hidden></div>
+      <div class="view-details" tabindex="0" data-i18n-aria="controls">
+        <div class="time-controls" aria-label="Time controls" data-i18n-aria="timeControls">
+          <label><span data-i18n="speed">Speed</span><input id="time-speed" type="range" min="0" max="4" step="0.1" value="1"><output id="time-speed-value" for="time-speed">1.0×</output></label>
+          <label><span data-i18n="seconds">Seconds</span><input id="time-position" type="number" min="0" max="86400" step="0.001" value="0"></label>
+          <button id="seek-button" class="quiet small" data-i18n="seek">Seek</button>
+          <button id="step-button" class="quiet small" data-i18n="step">+1 frame</button>
+          <label><span>BPM</span><input id="bpm" type="number" min="20" max="300" step="1" value="120"></label>
+        </div>
+        <section class="parameter-panel" data-i18n-title="parametersHint">
+          <div class="section-heading"><h2 data-i18n="controls">Live controls</h2></div>
+          <div id="parameters" class="parameter-grid"></div>
+        </section>
+        <section class="patch-panel">
+          <div class="section-heading"><h2 data-i18n="patch">Signal chain</h2><span id="node-count" class="mini-label">6 NODES</span></div>
+          <div id="patch-strip" class="patch-strip"></div>
+          <div class="patch-bottom"><p id="sample-description"></p><button id="shader-button" class="quiet small">GLSL</button></div>
+        </section>
+        <p class="preview-note" id="preview-note" data-i18n="previewHint">This is a bundled preview. Run compiles the code in the editor.</p>
       </div>
-      <div class="stage-info"><span id="canvas-resolution">960 × 540</span><span id="scene-time">00:00</span></div>
-      <div class="transport">
-        <div class="transport-left"><button id="pause-button" data-i18n="pause">Pause</button><button id="reset-button" class="quiet" data-i18n="reset">Reset</button><label class="select-label"><span data-i18n="output">Buffer</span><select id="output-select" aria-label="Output buffer" data-i18n-aria="output"><option>o0</option><option>o1</option><option>o2</option><option>o3</option></select></label></div>
-        <div class="transport-right"><label class="select-label"><span class="sr-only" data-i18n="resolution">Resolution</span><select id="resolution" aria-label="Resolution" data-i18n-aria="resolution"><option value="540">540p</option><option value="720" selected>720p</option><option value="1080">1080p</option></select></label><button id="snapshot-button" class="quiet" data-i18n="snapshot">PNG</button></div>
-      </div>
-      <div class="time-controls" aria-label="Time controls" data-i18n-aria="timeControls">
-        <label><span data-i18n="speed">Speed</span><input id="time-speed" type="range" min="0" max="4" step="0.1" value="1"><output id="time-speed-value" for="time-speed">1.0×</output></label>
-        <label><span data-i18n="seconds">Seconds</span><input id="time-position" type="number" min="0" max="86400" step="0.001" value="0"></label>
-        <button id="seek-button" class="quiet small" data-i18n="seek">Seek</button>
-        <button id="step-button" class="quiet small" data-i18n="step">+1 frame</button>
-        <label><span>BPM</span><input id="bpm" type="number" min="20" max="300" step="1" value="120"></label>
-      </div>
-      <section class="parameter-panel" data-i18n-title="parametersHint">
-        <div class="section-heading"><h2 data-i18n="controls">Live controls</h2></div>
-        <div id="parameters" class="parameter-grid"></div>
-      </section>
-      <section class="patch-panel">
-        <div class="section-heading"><h2 data-i18n="patch">Signal chain</h2><span id="node-count" class="mini-label">6 NODES</span></div>
-        <div id="patch-strip" class="patch-strip"></div>
-        <div class="patch-bottom"><p id="sample-description"></p><button id="shader-button" class="quiet small">GLSL</button></div>
-      </section>
-      <p class="preview-note" id="preview-note" data-i18n="previewHint">This is a bundled preview. Run compiles the code in the editor.</p>
     </section>
   </main>
   <footer class="statusbar"><div><span id="status-text" data-i18n="ready">Ready</span><progress id="progress" max="1" value="0" hidden aria-label="Compiler download" data-i18n-aria="loading"></progress></div><div><span id="compiler-mode"></span><span data-i18n="privacy">Your code stays in this tab</span></div></footer>

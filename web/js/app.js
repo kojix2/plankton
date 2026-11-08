@@ -492,8 +492,13 @@ async function start() {
             renderer.render(0);
     } });
     $('canvas-stage').addEventListener('pointermove', (event) => {
+        if (!renderer)
+            return;
         const box = $('view').getBoundingClientRect();
-        renderer?.setMouse((event.clientX - box.left) / box.width, 1 - (event.clientY - box.top) / box.height);
+        const scale = Math.min(box.width / renderer.width, box.height / renderer.height);
+        const width = renderer.width * scale, height = renderer.height * scale;
+        const left = box.left + (box.width - width) / 2, top = box.top + (box.height - height) / 2;
+        renderer.setMouse((event.clientX - left) / width, 1 - (event.clientY - top) / height);
     });
     $('fullscreen-button').addEventListener('click', async () => { try {
         if (document.fullscreenElement)

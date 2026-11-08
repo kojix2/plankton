@@ -149,3 +149,40 @@ test('gallery, Japanese UI, resolution, PNG capture, and mobile layout', async (
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
     await page.screenshot({ path: testInfo.outputPath('mobile-ja.png'), fullPage: true });
 });
+
+test('output and transport stay fixed while long settings scroll', async ({ page }, testInfo) => {
+    const parameters = Array.from({ length: 16 }, (_, i) => `param("p${i}", 0.5, min: 0.0, max: 1.0)`);
+    await compile(page, [...parameters, 'solid(mouse.x, mouse.y, 0).out'].join('\n'));
+    await page.locator('#pause-button').click();
+    await page.locator('#resolution').selectOption('1080');
+    await expect(page.locator('#parameters input')).toHaveCount(16);
+    for (const [width, height, language] of [[1280, 600, 'en'], [1024, 600, 'ja'], [960, 480, 'ru']]) {
+        await page.setViewportSize({ width, height });
+        await page.locator('#language').selectOption(language);
+        await expect(page.locator('html')).toHaveAttribute('lang', language);
+        await page.locator('.view-details').evaluate(el => { el.scrollTop = 0; });
+        const stage = await page.locator('#canvas-stage').boundingBox();
+        const transport = await page.locator('.transport').boundingBox();
+        expect(stage.height).toBeGreaterThan(50);
+        await expect(page.locator('.transport')).toBeInViewport();
+        expect(await page.locator('.view-panel').evaluate(el => el.scrollHeight - el.clientHeight)).toBeLessThanOrEqual(1);
+        await page.locator('.view-details').hover();
+        await page.mouse.wheel(0, 2000);
+        await expect.poll(() => page.locator('.view-details').evaluate(el => el.scrollTop)).toBeGreaterThan(0);
+        await expect(page.locator('#shader-button')).toBeInViewport();
+        expect(await page.locator('#canvas-stage').boundingBox()).toEqual(stage);
+        expect(await page.locator('.transport').boundingBox()).toEqual(transport);
+        expect(await page.locator('.view-panel').evaluate(el => el.scrollTop)).toBe(0);
+    }
+    await page.screenshot({ path: testInfo.outputPath('short-window.png') });
+    const stage = await page.locator('#canvas-stage').boundingBox();
+    const imageWidth = Math.min(stage.width, stage.height * 16 / 9);
+    const imageHeight = imageWidth * 9 / 16;
+    await page.mouse.move(stage.x + (stage.width - imageWidth) / 2 + imageWidth / 4,
+        stage.y + (stage.height - imageHeight) / 2 + imageHeight / 4);
+    const color = await centerPixel(page);
+    expect(color[0]).toBeGreaterThan(60);
+    expect(color[0]).toBeLessThan(68);
+    expect(color[1]).toBeGreaterThan(187);
+    expect(color[1]).toBeLessThan(195);
+});
