@@ -5,8 +5,14 @@ import { readFile, readdir } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { setFlagsFromString } from 'node:v8';
 import { parseProgramOutput, validateGraph } from '../web/js/graph.js';
 import { OPERATIONS } from '../web/js/operations.js';
+// A module with one (exnref) -> () type probes exception-reference support.
+// Older Node versions need the flag; newer versions enable it and remove the flag.
+const exnref = new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 96, 1, 105, 0]);
+if (!WebAssembly.validate(exnref))
+    setFlagsFromString('--experimental-wasm-exnref');
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const files = {};
 async function sources(directory, prefix = '') {

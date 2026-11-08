@@ -13,7 +13,7 @@
     "presets": "node scripts/seed-previews.mjs",
     "check": "node scripts/check.mjs",
     "test": "node --test test/*.test.mjs",
-    "test:wasm": "node --experimental-wasm-exnref scripts/test-wasm.mjs",
+    "test:wasm": "node scripts/test-wasm.mjs",
     "test:browser": "node scripts/test-browser.mjs",
     "test:playwright": "playwright test",
     "build": "node scripts/build.mjs",
