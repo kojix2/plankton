@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { setFlagsFromString } from 'node:v8';
 import { parseProgramOutput, validateGraph } from '../web/js/graph.js';
 import { OPERATIONS } from '../web/js/operations.js';
+import { REFERENCE_SECTIONS } from '../web/js/reference.js';
 // A module with one (exnref) -> () type probes exception-reference support.
 // Older Node versions need the flag; newer versions enable it and remove the flag.
 const exnref = new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 96, 1, 105, 0]);
@@ -48,6 +49,13 @@ try {
         source += op.kind === 'source' ? `${op.name}.out\n` : op.kind === 'combine' ? `osc.${op.name}(noise).out\n` : `osc.${op.name}.out\n`;
     }
     validateGraph(await check(source));
+    // Type-check and execute every browser reference example in its own method.
+    // Reset between examples so their nodes/parameters do not accumulate.
+    const reference = REFERENCE_SECTIONS.flatMap(group => group.entries).filter(entry => !entry.native);
+    const examples = reference.map((entry, i) =>
+        `def reference_${i}\n${entry.example}\nend\nPlankton.reset\nreference_${i}\n`).join('\n');
+    validateGraph(await check(examples));
+    console.log(`Compiled and executed ${reference.length} reference examples.`);
     await check('n = 2 * time + 1.0 - mouse.y / 2\nosc(n).rotate(sin(time)).out\n');
     await check('osc(lerp(2, 10, time.sin)).out\n');
     const media = await check('src(s0).blend(src(s3), audio.fft(31)).brightness(audio.level).rotate(beat * 0.1 + delta).out\n');

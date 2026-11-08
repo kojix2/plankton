@@ -4,7 +4,7 @@ import { Editor } from './editor.js';
 import { I18n, LANGUAGES, storage } from './i18n.js';
 import { createShareURL, readSharedSource } from './share.js';
 import { LIMITS, graphStats, validateGraph } from './graph.js';
-import { OPERATIONS } from './operations.js';
+import { REFERENCE_SECTIONS } from './reference.js';
 import { Inputs } from './inputs.js';
 const $ = (id) => document.getElementById(id);
 const i18n = new I18n();
@@ -141,25 +141,71 @@ function renderGallery() {
 function renderAPI() {
     const target = $('api-list');
     target.replaceChildren();
+    $('api-nav').replaceChildren();
     const note = document.createElement('p');
     note.textContent = t('apiTechnical');
     target.append(note);
-    for (const [kind, key] of [['source', 'apiSource'], ['transform', 'apiTransform'], ['combine', 'apiCombine']]) {
+    for (const group of REFERENCE_SECTIONS) {
         const section = document.createElement('section'), heading = document.createElement('h3');
-        heading.textContent = t(key);
+        section.id = `api-${group.id}`;
+        heading.textContent = t(group.key);
         section.append(heading);
-        for (const op of OPERATIONS.filter((item) => item.kind === kind)) {
-            const div = document.createElement('div');
+        const button = document.createElement('button');
+        button.className = 'quiet small';
+        button.textContent = t(group.key);
+        button.setAttribute('aria-controls', section.id);
+        button.addEventListener('click', () => section.scrollIntoView({ block: 'start' }));
+        $('api-nav').append(button);
+        for (const item of group.entries) {
+            const div = document.createElement('details');
             div.className = 'api-entry';
+            div.dataset.apiId = item.id;
+            if (item.operation)
+                div.dataset.operation = item.operation;
+            const summary = document.createElement('summary');
             const code = document.createElement('code');
-            code.textContent = `${kind === 'source' ? '' : '.'}${op.name}(${[...(kind === 'combine' ? ['texture'] : []), ...op.args.map((arg) => `${arg.name} = ${arg.default}`)].join(', ')})`;
+            code.textContent = item.signature;
+            summary.append(code);
             const desc = document.createElement('p');
-            desc.textContent = op.description;
-            div.append(code, desc);
+            desc.textContent = item.description;
+            div.append(summary, desc);
+            if (item.args.length) {
+                const args = document.createElement('dl');
+                args.className = 'api-args';
+                for (const [name, meaning] of item.args) {
+                    const term = document.createElement('dt'), definition = document.createElement('dd');
+                    term.textContent = name;
+                    definition.textContent = meaning;
+                    args.append(term, definition);
+                }
+                div.append(args);
+            }
+            const example = document.createElement('pre');
+            example.className = 'help-code';
+            example.textContent = item.example;
+            div.append(example);
             section.append(div);
         }
         target.append(section);
     }
+    filterAPI();
+}
+function filterAPI() {
+    const query = $('api-search').value.trim().toLowerCase();
+    let matches = 0;
+    for (const [i, section] of [...$('api-list').querySelectorAll('section')].entries()) {
+        let visible = 0;
+        for (const item of section.querySelectorAll('.api-entry')) {
+            item.hidden = query !== '' && !item.textContent.toLowerCase().includes(query);
+            item.open = query !== '' && !item.hidden;
+            if (!item.hidden) visible++;
+        }
+        section.hidden = visible === 0;
+        $('api-nav').children[i].hidden = section.hidden;
+        matches += visible;
+    }
+    $('api-guide').hidden = query !== '';
+    $('api-empty').hidden = matches !== 0;
 }
 function report(error) { if (error?.name === 'AbortError')
     return; status('failed', {}, true); log(error?.message ?? String(error), true); }
@@ -520,6 +566,7 @@ async function start() {
     } });
     $('gallery-button').addEventListener('click', () => $('gallery-dialog').showModal());
     $('api-button').addEventListener('click', () => $('api-dialog').showModal());
+    $('api-search').addEventListener('input', () => { filterAPI(); $('api-content').scrollTop = 0; });
     $('share-button').addEventListener('click', async () => { try {
         $('share-url').value = await createShareURL(editor.value, location.href, i18n.language);
         $('copy-link').textContent = t('copy');

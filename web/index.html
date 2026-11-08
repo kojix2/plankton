@@ -115,7 +115,12 @@
     <p class="input-help" data-i18n="devicesHint">Camera and microphone start only after you enable them. Stop releases devices. Reloading or opening a shared link never enables them automatically. HTTPS or localhost is required.</p>
   </dialog>
   <dialog id="gallery-dialog" class="wide-dialog"><div class="dialog-heading"><h2 data-i18n="gallery">Examples</h2><button class="close-dialog" data-i18n-aria="close">×</button></div><p class="dialog-intro" data-i18n="galleryHint">Load an example to explore its preview. Run compiles your changes.</p><div id="gallery-grid" class="gallery-grid"></div></dialog>
-  <dialog id="api-dialog" class="wide-dialog"><div class="dialog-heading"><h2 data-i18n="api">Reference</h2><button class="close-dialog" data-i18n-aria="close">×</button></div><div class="help-layout"><div><p data-i18n="helpIntro"></p><pre class="help-code">osc(10, 0.1, 1.4)
+  <dialog id="api-dialog" class="wide-dialog" aria-labelledby="api-title">
+    <div class="dialog-heading"><h2 id="api-title" data-i18n="api">Reference</h2><button class="close-dialog" data-i18n-aria="close">×</button></div>
+    <label class="api-search"><span data-i18n="apiSearch">Search APIs</span><input id="api-search" type="search" autocomplete="off" spellcheck="false"></label>
+    <nav id="api-nav" class="api-nav" aria-label="API categories" data-i18n-aria="apiCategories"></nav>
+    <div id="api-content" class="api-content" tabindex="0" data-i18n-aria="api">
+      <details id="api-guide" class="api-guide"><summary data-i18n="apiGuide">Getting started &amp; concepts</summary><p data-i18n="helpIntro"></p><pre class="help-code">osc(10, 0.1, 1.4)
   .modulate(noise(3), 0.2)
   .kaleid(5)
   .out</pre><h3 data-i18n="apiSignals">Live expressions</h3><p data-i18n="helpSignals"></p><pre class="help-code">time.sin * 4 + 8
@@ -125,7 +130,11 @@ osc(6 + audio.fft(0) * 24)
   .brightness(audio.level)
   .rotate(beat * 0.08).out</pre><h3 data-i18n="feedback">Feedback</h3><p data-i18n="helpFeedback"></p><pre class="help-code">src(o0).scale(1.01)
   .blend(osc(8), 0.05)
-  .out(o0)</pre><p data-i18n="helpLimit"></p><p data-i18n="helpShortcuts"></p><p data-i18n="apiCompatibility"></p></div><div id="api-list" class="api-list"></div></div></dialog>
+  .out(o0)</pre><p data-i18n="helpLimit"></p><p data-i18n="helpShortcuts"></p><p data-i18n="apiCompatibility"></p></details>
+      <div id="api-list" class="api-list"></div>
+      <p id="api-empty" role="status" data-i18n="apiNoResults" hidden>No matching API.</p>
+    </div>
+  </dialog>
   <dialog id="share-dialog"><div class="dialog-heading"><h2 data-i18n="share">Share</h2><button class="close-dialog" data-i18n-aria="close">×</button></div><p data-i18n="shareHint"></p><label for="share-url" class="sr-only" data-i18n="share">Share link</label><textarea id="share-url" readonly rows="5"></textarea><div class="dialog-footer"><button id="copy-link" class="primary" data-i18n="copy">Copy link</button></div></dialog>
   <dialog id="shader-dialog" class="wide-dialog"><div class="dialog-heading"><h2>GLSL <span class="dim">/ WebGL 2</span></h2><button class="close-dialog" data-i18n-aria="close">×</button></div><pre id="shader-code" class="shader-code"></pre><div class="dialog-footer"><button id="export-graph" data-i18n="exportGraph">Export graph</button><button id="export-shader" class="primary" data-i18n="exportShader">Export GLSL</button></div></dialog>
   <noscript>This application needs JavaScript and WebAssembly. No source is uploaded to a server.</noscript>

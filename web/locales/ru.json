@@ -119,5 +119,13 @@
   "video": "Видео",
   "inputEmpty": "Нет входа",
   "inputLoading": "Загрузка входа…",
-  "inputFailed": "Не удалось запустить вход."
+  "inputFailed": "Не удалось запустить вход.",
+  "apiRouting": "Выходы и параметры",
+  "apiMethods": "Методы Signal",
+  "apiHelpers": "Вспомогательные функции",
+  "apiNative": "Типы и нативное использование",
+  "apiSearch": "Поиск API",
+  "apiGuide": "Начало работы и основы",
+  "apiCategories": "Категории API",
+  "apiNoResults": "Подходящий API не найден."
 }

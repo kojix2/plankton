@@ -119,5 +119,13 @@
   "video": "视频",
   "inputEmpty": "无输入",
   "inputLoading": "正在加载输入…",
-  "inputFailed": "无法启动输入。"
+  "inputFailed": "无法启动输入。",
+  "apiRouting": "输出与参数",
+  "apiMethods": "Signal 运算",
+  "apiHelpers": "辅助函数",
+  "apiNative": "类型与原生使用",
+  "apiSearch": "搜索 API",
+  "apiGuide": "入门与基本概念",
+  "apiCategories": "API 分类",
+  "apiNoResults": "没有匹配的 API。"
 }

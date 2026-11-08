@@ -1,5 +1,9 @@
 # Crystal DSL, version 1
 
+The in-app Reference lists the complete sketch API, including signatures, argument
+types/defaults, return types and runnable examples. Search by name or description;
+expand an entry for its details. Technical descriptions remain in English.
+
 The editor supplies the standard `Plankton::DSL` context automatically. Do not add
 `Plankton.emit` yourself: the compiler driver emits exactly one graph at the end.
 When using the library in a native program, `require "./src/plankton"`, write the
@@ -256,6 +260,7 @@ Geometry has transparent background. `scale(2)` zooms in around the center;
 centered red/green displacement (`channels - 0.5`). `gradient`, HSV color transforms,
 polygon geometry, alpha blending and kaleidoscope math are independently written.
 `modulate_scale` has its own defaults. Methods use Crystal snake_case. Sequencer
-arrays, arbitrary JavaScript callbacks, `setFunction`, audio FFT and video inputs
-are not implemented. Do not expect existing JavaScript/Hydra programs or exact
-Hydra screenshots to translate unchanged.
+arrays, arbitrary JavaScript callbacks and `setFunction` are not implemented.
+Media and microphone analysis use Plankton's Inputs UI and `src(s0)` / `audio`
+signals rather than Hydra's JavaScript media APIs. Do not expect existing
+JavaScript/Hydra programs or exact Hydra screenshots to translate unchanged.

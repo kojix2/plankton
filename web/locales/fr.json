@@ -119,5 +119,13 @@
   "video": "Vidéo",
   "inputEmpty": "Aucune entrée",
   "inputLoading": "Chargement…",
-  "inputFailed": "Impossible de démarrer cette entrée."
+  "inputFailed": "Impossible de démarrer cette entrée.",
+  "apiRouting": "Sorties et paramètres",
+  "apiMethods": "Méthodes de Signal",
+  "apiHelpers": "Fonctions utilitaires",
+  "apiNative": "Types et usage natif",
+  "apiSearch": "Rechercher une API",
+  "apiGuide": "Démarrage et concepts",
+  "apiCategories": "Catégories API",
+  "apiNoResults": "Aucune API correspondante."
 }

@@ -146,7 +146,9 @@ export async function runBrowserSuite({ app, modules, presets, manifest }) {
     await test('UI: reference and GLSL dialogs', () => {
         document.querySelector('#api-button').click();
         assert(document.querySelector('#api-dialog').open, 'Reference did not open');
-        assert(document.querySelectorAll('.api-entry').length === 36, 'Wrong API entry count');
+        assert(document.querySelectorAll('.api-entry[data-operation]').length === 36, 'Wrong texture API entry count');
+        for (const name of ['src-output', 'src-input', 'out', 'render', 'param', 'time', 'frame', 'delta', 'beat', 'audio-fft', 'mouse-x', 'signal-pow', 'signal-map', 'helper-map', 'emit'])
+            assert(document.querySelector(`[data-api-id="${name}"]`), `Missing API ${name}`);
         document.querySelector('#api-dialog').close();
         document.querySelector('#shader-button').click();
         assert(document.querySelector('#shader-code').textContent.includes('#version 300 es'), 'No shader text');

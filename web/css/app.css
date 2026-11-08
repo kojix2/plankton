@@ -144,14 +144,25 @@ dialog.wide-dialog { width: min(960px, calc(100% - 24px)); }
 .gallery-text { padding: 10px; display: flex; flex-direction: column; gap: 6px; }
 .gallery-text strong { font-size: 13px; font-weight: 600; }
 .gallery-text small { color: var(--muted); font-size: 12px; line-height: 1.5; }
-.help-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
-.help-layout p { font-size: 13px; line-height: 1.7; color: var(--muted); margin: 8px 0 12px; }
+#api-dialog[open] { display: flex; flex-direction: column; height: min(800px, 90dvh); overflow: hidden; }
+#api-dialog .dialog-heading { flex-shrink: 0; }
+.api-search { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.api-search input { flex: 1; min-width: 0; padding: 8px; color: var(--text); background: var(--control); border: 1px solid var(--stroke); border-radius: 2px; }
+.api-nav { display: flex; flex-wrap: wrap; gap: 4px; padding-bottom: 12px; border-bottom: 1px solid var(--stroke); }
+.api-content { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; padding: 12px 4px 0 0; }
+.api-guide > summary { cursor: pointer; padding-bottom: 8px; }
+.api-guide p { font-size: 13px; line-height: 1.7; color: var(--muted); margin: 8px 0 12px; }
 .help-code { padding: 12px; background: var(--control); overflow: auto; font: 12px/1.7 var(--mono); }
-.api-list h3 { margin-top: 0; border-bottom: 1px solid var(--stroke); padding: 8px 0; }
-.api-entry { margin-bottom: 12px; }
+.api-list h3 { border-bottom: 1px solid var(--stroke); padding: 8px 0; }
+.api-entry { border-bottom: 1px solid var(--stroke); }
+.api-entry summary { cursor: pointer; padding: 10px 0; overflow-wrap: anywhere; }
 .api-entry code { font: 12px var(--mono); overflow-wrap: anywhere; }
 .api-entry p { font-size: 12px; line-height: 1.6; margin: 4px 0 12px; }
 .api-list section { margin-bottom: 20px; }
+.api-args { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 16px; font-size: 12px; line-height: 1.6; }
+.api-args dt { font-family: var(--mono); }
+.api-args dd { margin: 0; color: var(--muted); }
+.api-entry .help-code { white-space: pre-wrap; overflow-wrap: anywhere; }
 .dialog-footer { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; margin-top: 12px; }
 #share-dialog p { color: var(--muted); line-height: 1.7; margin-bottom: 12px; }
 #share-url { width: 100%; background: var(--control); color: var(--text); border: 1px solid var(--stroke); border-radius: 2px; padding: 10px; resize: vertical; font: 12px/1.6 var(--mono); }
@@ -186,7 +197,6 @@ noscript { padding: 20px; background: var(--bg); color: var(--error); position: 
   .view-panel { height: min(80dvh, 720px); min-height: 360px; flex: none; }
   .statusbar { flex-shrink: 0; }
   .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .help-layout { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 600px) {
   .input-slots { grid-template-columns: repeat(2, minmax(0, 1fr)); }

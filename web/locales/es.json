@@ -119,5 +119,13 @@
   "video": "Vídeo",
   "inputEmpty": "Sin entrada",
   "inputLoading": "Cargando entrada…",
-  "inputFailed": "No se puede iniciar la entrada."
+  "inputFailed": "No se puede iniciar la entrada.",
+  "apiRouting": "Salidas y parámetros",
+  "apiMethods": "Métodos de Signal",
+  "apiHelpers": "Funciones auxiliares",
+  "apiNative": "Tipos y uso nativo",
+  "apiSearch": "Buscar API",
+  "apiGuide": "Inicio y conceptos",
+  "apiCategories": "Categorías de API",
+  "apiNoResults": "Ninguna API coincide."
 }

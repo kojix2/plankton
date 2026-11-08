@@ -119,5 +119,13 @@
   "video": "動画",
   "inputEmpty": "入力なし",
   "inputLoading": "入力を読み込み中…",
-  "inputFailed": "入力を開始できません。"
+  "inputFailed": "入力を開始できません。",
+  "apiRouting": "出力・パラメータ",
+  "apiMethods": "Signalの演算",
+  "apiHelpers": "補助関数",
+  "apiNative": "型・ネイティブ利用",
+  "apiSearch": "APIを検索",
+  "apiGuide": "使い方・基本概念",
+  "apiCategories": "APIのカテゴリ",
+  "apiNoResults": "一致するAPIはありません。"
 }

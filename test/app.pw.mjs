@@ -46,6 +46,45 @@ async function compile(page, source) {
     await expect(page.locator('#console')).not.toHaveClass('error');
 }
 
+test('reference exposes core APIs, argument details, examples and searchable categories', async ({ page }, testInfo) => {
+    const source = await page.locator('#source-code').inputValue();
+    const url = page.url();
+    await page.locator('#api-button').click();
+    await expect(page.locator('#api-dialog')).toBeVisible();
+    await expect(page.locator('.api-entry[data-operation]')).toHaveCount(36);
+    await page.locator('#api-nav [aria-controls="api-methods"]').click();
+    await expect(page.locator('#api-methods h3')).toBeInViewport();
+    expect(page.url()).toBe(url);
+    await page.locator('[data-api-id="signal-clamp"] summary').click();
+    await expect(page.locator('[data-api-id="signal-clamp"]')).toContainText('low : Scalar = 0');
+    await expect(page.locator('[data-api-id="signal-clamp"] .help-code')).toBeVisible();
+    await page.locator('#api-search').fill('audio.fft(');
+    await expect(page.locator('[data-api-id="audio-fft"]')).toBeVisible();
+    await expect(page.locator('[data-api-id="audio-fft"] .api-args')).toContainText('0 to 31');
+    await page.locator('#api-search').fill('time.sqrt');
+    await expect(page.locator('.api-entry:visible')).toHaveCount(1);
+    await expect(page.locator('[data-api-id="signal-sqrt"]')).toContainText('negative inputs are clamped to zero');
+    await page.locator('#api-search').fill('<img src=x onerror=alert(1)>');
+    await expect(page.locator('#api-empty')).toBeVisible();
+    await expect(page.locator('#api-dialog img')).toHaveCount(0);
+    await page.locator('#api-search').fill('');
+    await expect(page.locator('#api-empty')).toBeHidden();
+    await page.locator('#api-dialog .close-dialog').click();
+    await page.locator('#language').selectOption('ja');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'ja');
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator('#api-button').click();
+    await expect(page.locator('.api-search')).toContainText('APIを検索');
+    await page.locator('#api-search').fill('src(input');
+    await expect(page.locator('[data-api-id="src-input"] .help-code')).toHaveText('src(s0).kaleid(4).out');
+    expect(await page.locator('#api-dialog').evaluate(el => el.scrollWidth - el.clientWidth)).toBeLessThanOrEqual(1);
+    await page.screenshot({ path: testInfo.outputPath('reference-mobile-ja.png') });
+    await page.locator('#api-search').fill('');
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#api-dialog')).toBeHidden();
+    await expect(page.locator('#source-code')).toHaveValue(source);
+});
+
 async function centerPixel(page) {
     return page.evaluate(() => {
         const renderer = window.__planktonTest.renderer;

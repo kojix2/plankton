@@ -119,5 +119,13 @@
   "video": "동영상",
   "inputEmpty": "입력 없음",
   "inputLoading": "입력 불러오는 중…",
-  "inputFailed": "입력을 시작할 수 없습니다."
+  "inputFailed": "입력을 시작할 수 없습니다.",
+  "apiRouting": "출력 및 매개변수",
+  "apiMethods": "Signal 연산",
+  "apiHelpers": "도우미 함수",
+  "apiNative": "타입 및 네이티브 사용",
+  "apiSearch": "API 검색",
+  "apiGuide": "시작하기 및 기본 개념",
+  "apiCategories": "API 분류",
+  "apiNoResults": "일치하는 API가 없습니다."
 }
