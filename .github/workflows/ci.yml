@@ -13,13 +13,10 @@ jobs:
   crystal:
     name: Crystal / Ameba
     runs-on: ubuntu-latest
+    container: crystallang/crystal:latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@main
-      - uses: crystal-lang/install-crystal@master
-        with:
-          crystal: latest
-          shards: latest
       - run: make check-crystal
 
   web:
