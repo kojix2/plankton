@@ -2,12 +2,12 @@ require "json"
 
 # A typed, one-shot video-graph builder. Rendering runs in WebGL, not in a
 # Crystal draw loop. Graph version 1 is intentionally independent of JavaScript.
-module Hydra
+module Plankton
   VERSION       = "0.1.0"
   GRAPH_VERSION =   1
   MAX_NODES     = 128
   MAX_PARAMS    =  16
-  SENTINEL      = "__HYDRA_CRYSTAL_GRAPH_V1__"
+  SENTINEL      = "__PLANKTON_GRAPH_V1__"
 
   alias Scalar = Int::Primitive | Float::Primitive | Signal
 
@@ -301,7 +301,7 @@ module Hydra
     end
 
     def param(key : String, value : Number, min : Number = 0.0, max : Number = 1.0, step : Number = 0.01) : Signal
-      Hydra.graph.param(key, value, min, max, step)
+      Plankton.graph.param(key, value, min, max, step)
     end
 
     def o0 : Output
@@ -322,15 +322,15 @@ module Hydra
 
     # Output references are previous-frame textures, including self-feedback.
     def src(output : Output = Output.new(0)) : Texture
-      Hydra.graph.add("src", [Signal.cast(output.index)])
+      Plankton.graph.add("src", [Signal.cast(output.index)])
     end
 
     def src(input : Input) : Texture
-      Hydra.graph.add("input", [Signal.cast(input.index)])
+      Plankton.graph.add("input", [Signal.cast(input.index)])
     end
 
     def render(output : Output = Output.new(0)) : Nil
-      Hydra.graph.display = output.index
+      Plankton.graph.display = output.index
     end
 
     def sin(value : Scalar) : Signal
@@ -358,19 +358,19 @@ end
 # Only the Signal overload is added. Numeric arithmetic retains its original
 # meaning. This makes both `time * 2` and `2 * time` natural in Crystal.
 abstract struct Number
-  def +(other : Hydra::Signal) : Hydra::Signal
-    Hydra::Signal.cast(self) + other
+  def +(other : Plankton::Signal) : Plankton::Signal
+    Plankton::Signal.cast(self) + other
   end
 
-  def -(other : Hydra::Signal) : Hydra::Signal
-    Hydra::Signal.cast(self) - other
+  def -(other : Plankton::Signal) : Plankton::Signal
+    Plankton::Signal.cast(self) - other
   end
 
-  def *(other : Hydra::Signal) : Hydra::Signal
-    Hydra::Signal.cast(self) * other
+  def *(other : Plankton::Signal) : Plankton::Signal
+    Plankton::Signal.cast(self) * other
   end
 
-  def /(other : Hydra::Signal) : Hydra::Signal
-    Hydra::Signal.cast(self) / other
+  def /(other : Plankton::Signal) : Plankton::Signal
+    Plankton::Signal.cast(self) / other
   end
 end

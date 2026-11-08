@@ -1,16 +1,16 @@
 require "spec"
-require "../src/hydra"
+require "../src/plankton"
 
-Spec.before_each { Hydra.reset }
+Spec.before_each { Plankton.reset }
 
-describe Hydra do
+describe Plankton do
   it "distinguishes media inputs from output feedback" do
     src(s0).blend(src(s3), 0.5).out
-    Hydra.graph.nodes[0].op.should eq("input")
-    Hydra.graph.nodes[0].args[0].value.should eq(0.0)
-    Hydra.graph.nodes[1].args[0].value.should eq(3.0)
-    expect_raises(ArgumentError) { Hydra::Input.new(4) }
-    expect_raises(ArgumentError) { Hydra::Input.new(-1) }
+    Plankton.graph.nodes[0].op.should eq("input")
+    Plankton.graph.nodes[0].args[0].value.should eq(0.0)
+    Plankton.graph.nodes[1].args[0].value.should eq(3.0)
+    expect_raises(ArgumentError) { Plankton::Input.new(4) }
+    expect_raises(ArgumentError) { Plankton::Input.new(-1) }
   end
 
   it "encodes audio FFT, volume and tempo expressions" do
@@ -25,30 +25,30 @@ describe Hydra do
 
   it "builds a typed chain and registers its output" do
     texture = osc(12).rotate(0.2).kaleid(6).out
-    Hydra.graph.nodes.map(&.op).should eq(["osc", "rotate", "kaleid"])
-    Hydra.graph.outputs.should eq([2, nil, nil, nil])
+    Plankton.graph.nodes.map(&.op).should eq(["osc", "rotate", "kaleid"])
+    Plankton.graph.outputs.should eq([2, nil, nil, nil])
     texture.id.should eq(2)
   end
 
   it "keeps texture operands in a topologically ordered graph" do
     osc.modulate(noise, 0.2).out
-    Hydra.graph.nodes.last.inputs.should eq([0, 1])
+    Plankton.graph.nodes.last.inputs.should eq([0, 1])
   end
 
   it "allows shared immutable texture values" do
     source = osc
     source.rotate(0.2).out(o0)
     source.kaleid(6).out(o1)
-    Hydra.graph.nodes.size.should eq(3)
-    Hydra.graph.nodes[1].inputs.should eq([0])
-    Hydra.graph.nodes[2].inputs.should eq([0])
+    Plankton.graph.nodes.size.should eq(3)
+    Plankton.graph.nodes[1].inputs.should eq([0])
+    Plankton.graph.nodes[2].inputs.should eq([0])
   end
 
   it "encodes feedback as a texture reference, not a graph cycle" do
     src(o0).scale(1.01).blend(osc, 0.1).out
-    Hydra.graph.nodes.first.op.should eq("src")
-    Hydra.graph.nodes.first.args.first.value.should eq(0.0)
-    Hydra.graph.nodes.first.inputs.should be_empty
+    Plankton.graph.nodes.first.op.should eq("src")
+    Plankton.graph.nodes.first.args.first.value.should eq(0.0)
+    Plankton.graph.nodes.first.inputs.should be_empty
   end
 
   it "supports numeric operands on both sides of live signals" do
@@ -75,7 +75,7 @@ describe Hydra do
     first = param("speed", 0.2, min: 0, max: 1)
     second = param("speed", 0.2, min: 0, max: 1)
     first.key.should eq(second.key)
-    Hydra.graph.params.size.should eq(1)
+    Plankton.graph.params.size.should eq(1)
   end
 
   it "rejects conflicting parameters and unsafe names" do
@@ -92,20 +92,20 @@ describe Hydra do
 
   it "rejects mixed graphs" do
     first = osc
-    Hydra.reset
+    Plankton.reset
     expect_raises(ArgumentError) { first.blend(noise) }
   end
 
   it "bounds graph growth and output indices" do
-    Hydra::MAX_NODES.times { solid }
+    Plankton::MAX_NODES.times { solid }
     expect_raises(ArgumentError) { solid }
-    expect_raises(ArgumentError) { Hydra::Output.new(4) }
+    expect_raises(ArgumentError) { Plankton::Output.new(4) }
   end
 
   it "serializes the versioned protocol" do
     solid(1, 0.5, 0).out(o2)
     render(o2)
-    value = JSON.parse(Hydra.graph.to_json)
+    value = JSON.parse(Plankton.graph.to_json)
     value["version"].as_i.should eq(1)
     value["display"].as_i.should eq(2)
     value["outputs"][2].as_i.should eq(0)
@@ -113,6 +113,6 @@ describe Hydra do
   end
 
   it "requires an explicit output" do
-    expect_raises(ArgumentError) { Hydra.emit }
+    expect_raises(ArgumentError) { Plankton.emit }
   end
 end

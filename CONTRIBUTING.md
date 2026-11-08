@@ -14,8 +14,9 @@ UI translations live in `web/locales/`. Add every key to all nine locales, prese
 Localize display strings with `textContent`, not interpolated HTML. English is the
 default even on a non-English browser; an explicit selection is remembered.
 
-Keep the interface minimal: neutral surfaces, plain controls, and compact readable
-type. Use color and visual emphasis for syntax, errors, focus, or operation state.
+Simple is best. Keep the interface minimal: neutral surfaces, plain controls, and
+compact readable type. Use color and visual emphasis for syntax, errors, focus,
+or operation state.
 Avoid decorative logos, shadows, blur, animations, and promotional headings.
 
 Code introduced from another project needs attribution and a compatible license;

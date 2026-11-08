@@ -1,4 +1,4 @@
-name: hydra-crystal
+name: plankton
 version: 0.1.0
 
 crystal: ">= 1.17.0"

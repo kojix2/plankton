@@ -21,7 +21,7 @@ await sources(path.join(root, 'src'));
 const compiler = await createCompiler();
 let count = 0;
 try {
-    const run = async (source) => compiler.run('require "./hydra"\nrequire "./sketch"\nHydra.emit\n', '', { files: { ...files, 'sketch.cr': source } });
+    const run = async (source) => compiler.run('require "./plankton"\nrequire "./sketch"\nPlankton.emit\n', '', { files: { ...files, 'sketch.cr': source } });
     const check = async (source) => {
         const result = await run(source);
         assert.equal(result.ok, true, [...(result.errors ?? []), result.stderr].join('\n'));

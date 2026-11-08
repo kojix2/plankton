@@ -1,10 +1,10 @@
-# hydra / crystal
+# Plankton
 
 **Crystalで映像を書く、ブラウザ完結のビジュアル・シンセサイザー。**
 Hydra型のメソッドチェーンを使い、Crystal → WebAssembly → 映像グラフ →
 WebGL 2という経路で動作します。GitHub Pagesだけで配信する設計です。
 
-[English](README.md) · [DSL仕様](docs/DSL.md) · [構造](docs/ARCHITECTURE.md) · [検証状況](docs/VALIDATION.md)
+[English](README.md) · [DSL仕様](docs/DSL.md) · [構造](docs/ARCHITECTURE.md) · [検証方法](docs/VALIDATION.md)
 
 ```crystal
 frequency = param("frequency", 8.0, min: 1.0, max: 40.0, step: 0.1)
@@ -20,12 +20,6 @@ osc(frequency, 0.045, 1.4)
 `frequency`は画面上のスライダーになります。`time`、`mouse.x`、`mouse.y`や
 スライダーの値はGPUのuniformとして更新されるため、映像を変えるたびに
 Crystalを再コンパイルする必要はありません。
-
-**検証状況：** JavaScript単体テスト、全サンプルの実Crystal→Wasmコンパイル、
-ネイティブCrystal spec、HTTP経由のPlaywrightテストを実行済みです。
-Runによる実コンパイル、画素の変化、停止、主要UI操作まで確認しています。
-AmebaのCrystalバージョン制約など、詳細は[検証記録](docs/VALIDATION.md)を参照してください。
-ソースZIPにコンパイラのWasm本体は含めず、`make`または`npm ci`で取得します。
 
 ## 主な機能
 
@@ -169,7 +163,7 @@ crystal spec --error-trace
 
 Amebaはブラウザへ搭載せず、開発時とGitHub Actionsで実行します。
 エディタのRun時にはCrystalコンパイラ自身が文法・型を検査します。
-`src/hydra/`がDSL、`web/js/shader.js`がGLSL生成、`renderer.js`がGPU描画です。
+`src/plankton/`がDSL、`web/js/shader.js`がGLSL生成、`renderer.js`がGPU描画です。
 詳細は英語版READMEと`docs/`を参照してください。
 
 音声の合成・出力、任意GLSL・3D・Processingの`draw`ループは未実装です。

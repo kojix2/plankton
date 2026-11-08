@@ -1,6 +1,6 @@
 import { OPERATIONS } from './operations.js';
 export const LIMITS = Object.freeze({ sourceBytes: 65536, graphBytes: 1048576, nodes: 128, params: 16, depth: 32, signals: 4096, work: 2048 });
-export const SENTINEL = '__HYDRA_CRYSTAL_GRAPH_V1__';
+export const SENTINEL = '__PLANKTON_GRAPH_V1__';
 const definitions = new Map(OPERATIONS.map((op) => [op.name, op]));
 definitions.set('src', { inputs: 0, args: [{ name: 'output' }] });
 definitions.set('input', { inputs: 0, args: [{ name: 'slot' }] });
@@ -107,7 +107,7 @@ export function parseProgramOutput(stdout) {
     const lines = stdout.split(/\r?\n/);
     const matches = lines.filter((line) => line.startsWith(SENTINEL));
     if (matches.length !== 1)
-        throw new Error('The sketch did not emit exactly one graph. End a texture chain with .out; do not call Hydra.emit yourself.');
+        throw new Error('The sketch did not emit exactly one graph. End a texture chain with .out; do not call Plankton.emit yourself.');
     const graph = validateGraph(JSON.parse(matches[0].slice(SENTINEL.length)));
     return { graph, log: lines.filter((line) => !line.startsWith(SENTINEL)).join('\n').trim() };
 }

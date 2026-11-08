@@ -21,7 +21,7 @@ async function compile(page, source) {
 
 async function pixel(page, x = .5, y = .5) {
     return page.evaluate(([x, y]) => {
-        const r = window.__hydraTest.renderer, gl = r.gl, data = new Uint8Array(4);
+        const r = window.__planktonTest.renderer, gl = r.gl, data = new Uint8Array(4);
         r.render(0);
         gl.readPixels(Math.floor(r.width * x), Math.floor(r.height * y), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, data);
         if (gl.getError()) throw new Error('WebGL reported an error');
@@ -110,10 +110,10 @@ test('video file decodes, follows pause, seek, speed and one-frame stepping', as
     await page.locator('#inputs-dialog .close-dialog').click();
     await compile(page, 'src(s0).out');
     await page.locator('#pause-button').click();
-    await expect.poll(() => page.evaluate(() => window.__hydraTest.inputs.slots[0].element.paused)).toBe(true);
+    await expect.poll(() => page.evaluate(() => window.__planktonTest.inputs.slots[0].element.paused)).toBe(true);
     // MediaRecorder WebM may lack a finite duration; decode metadata by seeking.
     await page.evaluate(async () => {
-        const video = window.__hydraTest.inputs.slots[0].element;
+        const video = window.__planktonTest.inputs.slots[0].element;
         if (!Number.isFinite(video.duration)) {
             video.currentTime = 100;
             await new Promise(resolve => video.addEventListener('seeked', resolve, { once: true }));
@@ -121,26 +121,26 @@ test('video file decodes, follows pause, seek, speed and one-frame stepping', as
     });
     await page.locator('#time-position').fill('1.2');
     await page.locator('#seek-button').click();
-    await expect.poll(() => page.evaluate(() => window.__hydraTest.inputs.slots[0].element.currentTime)).toBeCloseTo(1.2, 1);
+    await expect.poll(() => page.evaluate(() => window.__planktonTest.inputs.slots[0].element.currentTime)).toBeCloseTo(1.2, 1);
     await expect.poll(async () => (await pixel(page))[1]).toBeGreaterThan(230);
     await page.locator('#time-speed').focus();
     await page.locator('#time-speed').press('End');
     await page.locator('#pause-button').click();
-    await expect.poll(() => page.evaluate(() => window.__hydraTest.inputs.slots[0].element.playbackRate)).toBe(4);
+    await expect.poll(() => page.evaluate(() => window.__planktonTest.inputs.slots[0].element.playbackRate)).toBe(4);
     await page.locator('#pause-button').click();
     await page.locator('#time-position').fill('0.2');
     await page.locator('#seek-button').click();
     await expect.poll(async () => (await pixel(page))[0]).toBeGreaterThan(230);
     await page.locator('#step-button').click();
-    await expect.poll(() => page.evaluate(() => window.__hydraTest.inputs.slots[0].element.currentTime)).toBeCloseTo(.2 + 1 / 60, 2);
+    await expect.poll(() => page.evaluate(() => window.__planktonTest.inputs.slots[0].element.currentTime)).toBeCloseTo(.2 + 1 / 60, 2);
 });
 
 test('camera capture uses a test device and Stop releases its tracks', async ({ page }) => {
-    expect(await page.evaluate(() => window.__hydraTest.inputs.slots.every(slot => slot === null))).toBe(true);
+    expect(await page.evaluate(() => window.__planktonTest.inputs.slots.every(slot => slot === null))).toBe(true);
     await page.locator('#inputs-button').click();
     await page.locator('#camera-button').click();
     await expect(page.locator('.input-card').first()).toContainText('Camera:');
-    await page.evaluate(() => { window.cameraTracks = window.__hydraTest.inputs.slots[0].stream.getTracks(); });
+    await page.evaluate(() => { window.cameraTracks = window.__planktonTest.inputs.slots[0].stream.getTracks(); });
     await page.locator('#inputs-dialog .close-dialog').click();
     await compile(page, 'src(s0).kaleid(3).out');
     await expect.poll(async () => Math.max(...(await pixel(page)).slice(0, 3))).toBeGreaterThan(20);
@@ -164,8 +164,8 @@ test('a real oscillator stream passes through microphone FFT, gain, uniforms and
     await page.locator('#inputs-button').click();
     await page.locator('#mic-button').click();
     await expect(page.locator('#mic-status')).toHaveText('On');
-    await expect.poll(() => page.evaluate(() => Math.max(...window.__hydraTest.inputs.fft))).toBeGreaterThan(.1);
-    const peak = await page.evaluate(() => { const a = window.__hydraTest.inputs.fft; return Array.from(a).indexOf(Math.max(...a)); });
+    await expect.poll(() => page.evaluate(() => Math.max(...window.__planktonTest.inputs.fft))).toBeGreaterThan(.1);
+    const peak = await page.evaluate(() => { const a = window.__planktonTest.inputs.fft; return Array.from(a).indexOf(Math.max(...a)); });
     expect(peak).toBeGreaterThan(10);
     expect(peak).toBeLessThan(18);
     await page.locator('#inputs-dialog .close-dialog').click();
@@ -177,7 +177,7 @@ test('a real oscillator stream passes through microphone FFT, gain, uniforms and
     await page.locator('#audio-gain').focus();
     await page.locator('#audio-gain').press('End');
     await expect.poll(async () => (await pixel(page))[0]).toBeGreaterThan(250);
-    await page.evaluate(() => { window.micTracks = window.__hydraTest.inputs.microphone.getTracks(); });
+    await page.evaluate(() => { window.micTracks = window.__planktonTest.inputs.microphone.getTracks(); });
     await page.locator('#mic-button').click();
     await expect(page.locator('#mic-status')).toHaveText('Off');
     expect(await page.evaluate(() => window.micTracks.every(track => track.readyState === 'ended'))).toBe(true);
@@ -204,7 +204,7 @@ test('permission denial is recoverable and late camera permission is cancelled b
         window.grantCamera(window.lateStream);
     });
     await expect.poll(() => page.evaluate(() => window.lateStream.getTracks().every(track => track.readyState === 'ended'))).toBe(true);
-    expect(await page.evaluate(() => window.__hydraTest.inputs.slots[0])).toBeNull();
+    expect(await page.evaluate(() => window.__planktonTest.inputs.slots[0])).toBeNull();
 });
 
 test('clock speed, BPM, seek and frame step drive compiled shader uniforms', async ({ page }) => {
@@ -222,12 +222,12 @@ test('clock speed, BPM, seek and frame step drive compiled shader uniforms', asy
     await page.locator('#time-speed').focus();
     await page.locator('#time-speed').press('Home');
     await page.locator('#pause-button').click();
-    await expect.poll(() => page.evaluate(() => window.__hydraTest.renderer.time)).toBe(1.5);
+    await expect.poll(() => page.evaluate(() => window.__planktonTest.renderer.time)).toBe(1.5);
     await page.locator('#step-button').click();
-    expect(await page.evaluate(() => window.__hydraTest.renderer.time)).toBeCloseTo(1.5 + 1 / 60, 8);
-    expect(await page.evaluate(() => window.__hydraTest.renderer.running)).toBe(false);
+    expect(await page.evaluate(() => window.__planktonTest.renderer.time)).toBeCloseTo(1.5 + 1 / 60, 8);
+    expect(await page.evaluate(() => window.__planktonTest.renderer.running)).toBe(false);
     await page.locator('#reset-button').click();
-    expect(await page.evaluate(() => window.__hydraTest.renderer.time)).toBe(0);
+    expect(await page.evaluate(() => window.__planktonTest.renderer.time)).toBe(0);
     await page.locator('#time-speed').focus();
     await page.locator('#time-speed').press('End');
     await page.locator('#pause-button').click();
@@ -237,7 +237,7 @@ test('clock speed, BPM, seek and frame step drive compiled shader uniforms', asy
     await expect(page.locator('#time-position')).toHaveValue('20');
     await page.locator('#seek-button').click();
     await page.locator('#pause-button').click();
-    const time = await page.evaluate(() => window.__hydraTest.renderer.time);
+    const time = await page.evaluate(() => window.__planktonTest.renderer.time);
     expect(time).toBeGreaterThanOrEqual(20);
     expect(time).toBeLessThan(22);
 });
@@ -253,8 +253,8 @@ test('reload and shared links do not reacquire devices or restore local files', 
     await page.reload();
     await expect(page.locator('body')).toHaveAttribute('data-ready', 'true');
     expect(await page.evaluate(() => window.deviceRequests)).toBe(0);
-    expect(await page.evaluate(() => window.__hydraTest.inputs.slots.every(slot => slot === null))).toBe(true);
-    expect(await page.evaluate(() => window.__hydraTest.inputs.microphone)).toBeNull();
+    expect(await page.evaluate(() => window.__planktonTest.inputs.slots.every(slot => slot === null))).toBe(true);
+    expect(await page.evaluate(() => window.__planktonTest.inputs.microphone)).toBeNull();
     await page.locator('#source-code').fill('src(s0).brightness(audio.level).out');
     await page.locator('#share-button').click();
     const url = await page.locator('#share-url').inputValue();

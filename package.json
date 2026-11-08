@@ -1,5 +1,5 @@
 {
-  "name": "hydra-crystal",
+  "name": "plankton",
   "version": "0.1.0",
   "private": true,
   "description": "A browser-only Crystal/Wasm visual synthesizer with a Hydra-inspired DSL",

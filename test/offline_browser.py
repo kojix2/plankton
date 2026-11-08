@@ -35,11 +35,11 @@ async def load(page):
  await page.add_style_tag(content=assets['css/app.css'])
  await page.evaluate(r'''({assets,images})=>{
   const cache={},store=new Map();
-  const loc={href:'https://fixture.invalid/hydra-crystal/?test=1',hash:'',reload:()=>{}};
+  const loc={href:'https://fixture.invalid/plankton/?test=1',hash:'',reload:()=>{}};
   const history={replaceState:(_a,_b,url)=>{loc.href=String(url);}};
   const storage={getItem:key=>store.get(key)??null,setItem:(key,value)=>store.set(key,value)};
   const fetch=async url=>{
-    const key=new URL(String(url),loc.href).pathname.replace(/^\/hydra-crystal\//,'');
+    const key=new URL(String(url),loc.href).pathname.replace(/^\/plankton\//,'');
     if(!Object.hasOwn(assets,key))throw new Error('Test asset unavailable: '+key);
     return new Response(assets[key],{status:200});
   };
@@ -49,7 +49,7 @@ async def load(page):
     const exported=[];
     let code=source.replace(/import\s+\{([^}]+)\}\s+from\s+'([^']+)';/g,(_m,names,id)=>`const {${names}}=require(${JSON.stringify(id)});`)
       .replace(/export\s+(async\s+)?(class|function|const|let)\s+(\w+)/g,(_m,async,kind,name)=>{exported.push(name);return `${async??''}${kind} ${name}`;})
-      .replaceAll('import.meta.url',JSON.stringify('https://fixture.invalid/hydra-crystal/js/'+name));
+      .replaceAll('import.meta.url',JSON.stringify('https://fixture.invalid/plankton/js/'+name));
     code+='\nObject.assign(exports,{'+exported.join(',')+'});';
     const exp={};cache[name]=exp;
     new Function('require','exports','fetch','location','history','localStorage',code)(id=>get(id.replace('./','')),exp,fetch,loc,history,storage);
@@ -61,7 +61,7 @@ async def load(page):
 }''',{'assets':assets,'images':images})
  await page.wait_for_function('document.body.dataset.ready || document.body.dataset.failed')
  if await page.locator('body').get_attribute('data-failed'):raise Exception(await page.locator('#console').inner_text())
- await page.evaluate('''()=>{for(const img of document.images){const key=new URL(img.src).pathname.replace('/hydra-crystal/','');if(fixture.images[key])img.src=fixture.images[key];}}''')
+ await page.evaluate('''()=>{for(const img of document.images){const key=new URL(img.src).pathname.replace('/plankton/','');if(fixture.images[key])img.src=fixture.images[key];}}''')
 
 async def main():
  async with async_playwright() as p:
@@ -72,7 +72,7 @@ async def main():
   suite=(ROOT/'test/browser-suite.mjs').read_text().replace('export async function','async function')
   expression=suite+'''\nconst presets={},manifest=JSON.parse(fixture.assets['examples/manifest.json']);
 for(const example of manifest)presets[example.id]=JSON.parse(fixture.assets[example.preview]);
-return await runBrowserSuite({app:__hydraTest,modules:{renderer:fixture.get('renderer.js'),operations:fixture.get('operations.js'),share:fixture.get('share.js')},presets,manifest});'''
+return await runBrowserSuite({app:__planktonTest,modules:{renderer:fixture.get('renderer.js'),operations:fixture.get('operations.js'),share:fixture.get('share.js')},presets,manifest});'''
   results=await page.evaluate('async()=>{'+expression+'}')
   print('BROWSER CHECKS',len(results));print('\n'.join(results));print('UNHANDLED',errors)
   (ROOT/'test-results').mkdir(exist_ok=True)
@@ -80,12 +80,12 @@ return await runBrowserSuite({app:__hydraTest,modules:{renderer:fixture.get('ren
   manifest=json.loads((ROOT/'examples/manifest.json').read_text())
   for example in manifest:
    data=await page.evaluate('''async (id)=>{
-    await __hydraTest.loadExample(id);const r=__hydraTest.renderer;r.pause();r.resize(480,270);r.reset();
+    await __planktonTest.loadExample(id);const r=__planktonTest.renderer;r.pause();r.resize(480,270);r.reset();
     for(let i=0;i<50;i++)r.render(.05);
     return r.canvas.toDataURL('image/png');
    }''',example['id'])
    (ROOT/'web/presets'/f"{example['id']}.png").write_bytes(base64.b64decode(data.split(',')[1]))
-  await page.evaluate("async()=>{await __hydraTest.loadExample('chromatic-tide');__hydraTest.renderer.pause();__hydraTest.renderer.resize(1280,720);__hydraTest.renderer.time=2;__hydraTest.renderer.render(0);}")
+  await page.evaluate("async()=>{await __planktonTest.loadExample('chromatic-tide');__planktonTest.renderer.pause();__planktonTest.renderer.resize(1280,720);__planktonTest.renderer.time=2;__planktonTest.renderer.render(0);}")
   await page.locator('#pause-button').click();await page.locator('#pause-button').click()
   await page.screenshot(path=str(ROOT/'test-results/desktop.png'),full_page=True)
   await page.locator('#language').select_option('ja');await page.wait_for_timeout(100)

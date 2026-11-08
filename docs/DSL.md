@@ -1,14 +1,14 @@
 # Crystal DSL, version 1
 
-The editor supplies the standard `Hydra::DSL` context automatically. Do not add
-`Hydra.emit` yourself: the compiler driver emits exactly one graph at the end.
-When using the library in a native program, `require "./src/hydra"`, write the
-sketch, then call `Hydra.emit` once. `puts` can write ordinary diagnostic lines.
+The editor supplies the standard `Plankton::DSL` context automatically. Do not add
+`Plankton.emit` yourself: the compiler driver emits exactly one graph at the end.
+When using the library in a native program, `require "./src/plankton"`, write the
+sketch, then call `Plankton.emit` once. `puts` can write ordinary diagnostic lines.
 Avoid `print` without a terminating newline immediately before the emitted graph.
 
 ## Textures and outputs
 
-A source returns `Hydra::Texture`; transformations return a new texture. Existing
+A source returns `Plankton::Texture`; transformations return a new texture. Existing
 textures do not mutate, so a shared expression can be reused in several branches.
 `.out` assigns a texture to output `o0` by default. `.out(o1)` writes another
 buffer. `render(o1)` selects the initially displayed output, not an execution order.
@@ -115,7 +115,7 @@ capped at 0.1 seconds before speed scaling to avoid large jumps after background
 
 ## Live scalar expressions
 
-A `Hydra::Signal` is a symbolic float expression evaluated per fragment on the GPU,
+A `Plankton::Signal` is a symbolic float expression evaluated per fragment on the GPU,
 not a numeric value evaluated by Crystal on each frame.
 
 | Expression | Meaning |

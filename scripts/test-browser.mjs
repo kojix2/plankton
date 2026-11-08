@@ -18,7 +18,7 @@ for (const candidate of ['/usr/bin/google-chrome', '/usr/bin/chromium', '/usr/bi
 }
 if (!chrome)
     throw new Error('Set CHROME_BIN to a Chromium/Chrome executable.');
-const profile = await mkdtemp(path.join(os.tmpdir(), 'hydra-browser-'));
+const profile = await mkdtemp(path.join(os.tmpdir(), 'plankton-browser-'));
 const { server, url } = await serve({ port: 0, base: '/repository/' }); // Exercise GitHub project-site subpaths.
 const child = spawn(chrome, ['--headless=new', '--no-sandbox', '--disable-dev-shm-usage', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--remote-debugging-port=0', `--user-data-dir=${profile}`, 'about:blank'], { stdio: ['ignore', 'ignore', 'pipe'] });
 let socket;
@@ -53,7 +53,7 @@ try {
     let ready = false;
     for (let i = 0; i < 1000; i++) {
         try {
-            const state = await evaluate(`({ready:!!window.__hydraTest,failed:document.body?.dataset.failed,log:document.querySelector('#console')?.textContent})`);
+            const state = await evaluate(`({ready:!!window.__planktonTest,failed:document.body?.dataset.failed,log:document.querySelector('#console')?.textContent})`);
             if (state?.failed)
                 throw new Error('App failed: ' + state.log);
             if (state?.ready) {
@@ -73,7 +73,7 @@ try {
     const manifest=await (await fetch('./examples/manifest.json')).json();const presets={};
     for(const example of manifest)presets[example.id]=await (await fetch('./'+example.preview)).json();
     const modules={renderer:await import('./js/renderer.js'),operations:await import('./js/operations.js'),share:await import('./js/share.js')};
-    return await (${runBrowserSuite.toString()})({app:window.__hydraTest,modules,presets,manifest});
+    return await (${runBrowserSuite.toString()})({app:window.__planktonTest,modules,presets,manifest});
   })()`;
     const results = await evaluate(expression);
     console.log(`${results.length} browser checks passed:\n${results.join('\n')}`);
@@ -81,7 +81,7 @@ try {
         const config = JSON.parse(await readFile(path.join(root, 'dist/compiler-config.json'), 'utf8'));
         if (config.mode !== 'local')
             throw new Error('End-to-end browser compilation requires npm run build (local compiler), not a CDN fixture.');
-        const result = await evaluate(`(async()=>{const app=window.__hydraTest;app.editor.value='osc(6).kaleid(4).out';await app.compile();if(document.querySelector('#view-badge').textContent!=='Compiled Crystal')throw new Error(document.querySelector('#console').textContent);app.renderer.pause();return document.querySelector('#console').textContent;})()`);
+        const result = await evaluate(`(async()=>{const app=window.__planktonTest;app.editor.value='osc(6).kaleid(4).out';await app.compile();if(document.querySelector('#view-badge').textContent!=='Compiled Crystal')throw new Error(document.querySelector('#console').textContent);app.renderer.pause();return document.querySelector('#console').textContent;})()`);
         console.log('REAL browser Crystal → Wasm → GPU compile:', result);
     }
 }

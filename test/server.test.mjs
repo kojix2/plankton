@@ -5,7 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { serve } from '../scripts/serve.mjs';
 async function fixture(run) {
-    const root = await mkdtemp(path.join(os.tmpdir(), 'hydra-http-'));
+    const root = await mkdtemp(path.join(os.tmpdir(), 'plankton-http-'));
     await writeFile(path.join(root, 'index.html'), '<h1>fixture</h1>');
     await writeFile(path.join(root, 'app.js'), 'export const test = true;');
     const { server, url } = await serve({ root, port: 0, base: '/project/' });
@@ -34,7 +34,7 @@ test('HTTP server implements HEAD and redirects base without slash', () => fixtu
     assert.equal(redirect.headers.get('location'), '/project/');
 }));
 test('HTTP server cannot escape its root through symlinks', () => fixture(async ({ url, root }) => {
-    const outside = path.join(os.tmpdir(), `hydra-outside-${process.pid}.txt`);
+    const outside = path.join(os.tmpdir(), `plankton-outside-${process.pid}.txt`);
     await writeFile(outside, 'private fixture');
     try {
         await symlink(outside, path.join(root, 'escape.txt'));

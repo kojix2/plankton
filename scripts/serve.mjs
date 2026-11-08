@@ -46,5 +46,5 @@ export async function serve({ root = path.join(project, 'dist'), port = 4173, ho
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
     const { url } = await serve({ port: Number(process.env.PORT || 4173), base: process.env.BASE || '/' });
-    console.log(`Hydra / Crystal: ${url}\nCtrl+C to stop. Build first with npm run build (or npm run build:cdn).`);
+    console.log(`Plankton: ${url}\nCtrl+C to stop. Build first with npm run build (or npm run build:cdn).`);
 }

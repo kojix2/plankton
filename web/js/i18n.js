@@ -1,13 +1,14 @@
 export const LANGUAGES = Object.freeze({ en: 'English', ja: '日本語', 'zh-CN': '简体中文', ko: '한국어', es: 'Español', fr: 'Français', de: 'Deutsch', 'pt-BR': 'Português', ru: 'Русский' });
 export const storage = {
     get(key) { try {
-        return localStorage.getItem(`hydra-crystal:${key}`);
+        // Preserve drafts and preferences saved before the project was renamed.
+        return localStorage.getItem(`plankton:${key}`) ?? localStorage.getItem(`hydra-crystal:${key}`);
     }
     catch {
         return null;
     } },
     set(key, value) { try {
-        localStorage.setItem(`hydra-crystal:${key}`, value);
+        localStorage.setItem(`plankton:${key}`, value);
     }
     catch { /* Private browsing/quota: editing still works. */ } },
 };

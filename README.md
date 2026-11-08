@@ -1,9 +1,9 @@
-# hydra / crystal
+# Plankton
 
 **A browser-only visual synthesizer. Write real Crystal, compile it to WebAssembly,
 and compose a live WebGL 2 signal graph.**
 
-[日本語](README.ja.md) · [DSL reference](docs/DSL.md) · [Architecture](docs/ARCHITECTURE.md) · [Validation status](docs/VALIDATION.md)
+[日本語](README.ja.md) · [DSL reference](docs/DSL.md) · [Architecture](docs/ARCHITECTURE.md) · [Validation](docs/VALIDATION.md)
 
 ```crystal
 frequency = param("frequency", 8.0, min: 1.0, max: 40.0, step: 0.1)
@@ -20,12 +20,6 @@ The editor is Crystal, **not a regex-based Crystal-to-JavaScript translator**.
 `@live-codes/crystal-wasm` compiles and links the code in a Worker; the resulting
 Wasm program constructs a checked graph. JavaScript generates GLSL from the
 validated graph, and WebGL animates it without rerunning Crystal each frame.
-
-**Verification:** JavaScript unit tests, actual Crystal/Wasm compilation of all
-examples, native Crystal specs, and Playwright tests over HTTP have passed.
-Browser tests exercise real compilation, GPU pixels, cancellation, and UI actions.
-See [the exact record and remaining limits](docs/VALIDATION.md), including the
-native Ameba version constraint. Compiler binaries are not in the source ZIP.
 
 ## Features
 

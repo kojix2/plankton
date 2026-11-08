@@ -9,14 +9,14 @@ test.beforeEach(async ({ page }) => {
             errors.push(`HTTP ${response.status()}: ${response.url()}`);
     });
     page.on('requestfailed', request => errors.push(`Request failed: ${request.url()}`));
-    page.hydraErrors = errors;
+    page.planktonErrors = errors;
     await page.goto('./?test=1');
     await expect(page.locator('body')).toHaveAttribute('data-ready', 'true');
     await expect(page.locator('#gpu-error')).toBeHidden();
 });
 
 test.afterEach(async ({ page }) => {
-    expect(page.hydraErrors).toEqual([]);
+    expect(page.planktonErrors).toEqual([]);
 });
 
 test('HTTP modules, all WebGL operations, twelve presets, and nine locales', async ({ page }, testInfo) => {
@@ -31,7 +31,7 @@ test('HTTP modules, all WebGL operations, twelve presets, and nine locales', asy
             operations: await import('./js/operations.js'),
             share: await import('./js/share.js'),
         };
-        return (${runBrowserSuite.toString()})({ app: window.__hydraTest, modules, manifest, presets });
+        return (${runBrowserSuite.toString()})({ app: window.__planktonTest, modules, manifest, presets });
     })()`);
     expect(checks).toHaveLength(62);
     await testInfo.attach('browser-checks', { body: checks.join('\n'), contentType: 'text/plain' });
@@ -48,7 +48,7 @@ async function compile(page, source) {
 
 async function centerPixel(page) {
     return page.evaluate(() => {
-        const renderer = window.__hydraTest.renderer;
+        const renderer = window.__planktonTest.renderer;
         renderer.render(0);
         const gl = renderer.gl, bytes = new Uint8Array(4);
         gl.readPixels(Math.floor(renderer.width / 2), Math.floor(renderer.height / 2), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, bytes);
@@ -142,7 +142,7 @@ test('gallery, Japanese UI, resolution, PNG capture, and mobile layout', async (
     const downloadPromise = page.waitForEvent('download');
     await page.locator('#snapshot-button').click();
     const download = await downloadPromise;
-    expect(download.suggestedFilename()).toBe('hydra-crystal.png');
+    expect(download.suggestedFilename()).toBe('plankton.png');
     await download.saveAs(testInfo.outputPath('capture.png'));
     expect(await download.failure()).toBeNull();
     await page.setViewportSize({ width: 390, height: 844 });

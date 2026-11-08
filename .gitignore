@@ -15,7 +15,6 @@
 /coverage/
 /tmp/
 *.log
-!/docs/validation/*.log
 .env
 .env.*
 !.env.example

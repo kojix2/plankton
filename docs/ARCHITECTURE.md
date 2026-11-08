@@ -32,7 +32,7 @@ a new one. This is separate from the WebGL animation loop on the main thread.
 A compile error does not replace the last good graph. A late result is discarded
 if the request was superseded or source changed while it was compiling.
 
-The graph builder is normal Crystal code in `src/hydra`. It allocates node and
+The graph builder is normal Crystal code in `src/plankton`. It allocates node and
 expression records, serializes once, and exits. There is no JS interpreter for a
 subset of Crystal, no `eval` of editor source, and no per-frame callback into Wasm.
 The user can write regular Crystal helpers, loops and types, within the upstream
@@ -48,10 +48,10 @@ GLSL compilation still happens synchronously through WebGL and can be expensive.
 
 ## Protocol and isolation
 
-The driver mounts `hydra.cr`, `hydra/core.cr`, `hydra/generated.cr`, and `sketch.cr`
+The driver mounts `plankton.cr`, `plankton/core.cr`, `plankton/generated.cr`, and `sketch.cr`
 in the compiler's in-memory filesystem. The main file requires the DSL and sketch,
-then calls `Hydra.emit`. The emitted line is prefixed by
-`__HYDRA_CRYSTAL_GRAPH_V1__`. There must be exactly one such line. Other lines become
+then calls `Plankton.emit`. The emitted line is prefixed by
+`__PLANKTON_GRAPH_V1__`. There must be exactly one such line. Other lines become
 console output, never HTML. Output is bounded before parsing.
 
 Graph version 1 contains `nodes`, four `outputs`, `display`, and `params`. Node

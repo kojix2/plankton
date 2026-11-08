@@ -506,7 +506,7 @@ async function start() {
     } });
     $('snapshot-button').addEventListener('click', async () => { try {
         if (renderer) {
-            download(await renderer.capture(), 'hydra-crystal.png');
+            download(await renderer.capture(), 'plankton.png');
             log(t('screenshotSaved'));
         }
     }
@@ -592,7 +592,7 @@ async function start() {
     document.body.dataset.ready = 'true';
     // Opt-in diagnostics for the browser regression suite, not code evaluation.
     if (new URL(location.href).searchParams.get('test') === '1')
-        globalThis.__hydraTest = { renderer, editor, compiler, inputs, loadExample, compile };
+        globalThis.__planktonTest = { renderer, editor, compiler, inputs, loadExample, compile };
 }
 start().catch((error) => { console.error(error); log(error.message, true, true); $('status-text').textContent = error.message; document.body.dataset.failed = 'true'; });
 window.addEventListener("pageshow", (event) => { if (event.persisted)

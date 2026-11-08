@@ -42,7 +42,7 @@ self.onmessage = async ({ data }) => {
             throw new Error('Source exceeds 64 KiB.');
         await initialize();
         let outputSize = 0;
-        const result = await compiler.run('require "./hydra"\nrequire "./sketch"\nHydra.emit\n', '', {
+        const result = await compiler.run('require "./plankton"\nrequire "./sketch"\nPlankton.emit\n', '', {
             files: { ...sourceFiles, 'sketch.cr': data.source },
             onOutput: (text) => {
                 outputSize += new TextEncoder().encode(text).length;
