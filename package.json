@@ -19,7 +19,7 @@
     "build": "node scripts/build.mjs",
     "build:cdn": "node scripts/build.mjs --cdn",
     "dev": "node scripts/serve.mjs",
-    "lint:crystal": "bin/ameba",
+    "lint:crystal": "crystal run lib/ameba/bin/ameba.cr",
     "test:crystal": "crystal spec"
   },
   "dependencies": {

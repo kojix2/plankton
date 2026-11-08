@@ -23,8 +23,8 @@ help:
 	  'PORT=4180 make      Serve on a different port; Ctrl+C stops the server'
 
 prerequisites:
-	@command -v $(NODE) >/dev/null 2>&1 || { echo 'Node.js >= 22 is required. Install Node.js 24 LTS, then run make again.' >&2; exit 1; }
-	@$(NODE) -e 'if (Number(process.versions.node.split(".")[0]) < 22) { console.error("Node.js >= 22 is required. Install Node.js 24 LTS, then run make again."); process.exit(1); }'
+	@command -v $(NODE) >/dev/null 2>&1 || { echo 'Node.js >= 22 is required. Install the latest Node.js release, then run make again.' >&2; exit 1; }
+	@$(NODE) -e 'if (Number(process.versions.node.split(".")[0]) < 22) { console.error("Node.js >= 22 is required. Install the latest Node.js release, then run make again."); process.exit(1); }'
 	@command -v $(NPM) >/dev/null 2>&1 || { echo 'npm is required. Install it with Node.js, then run make again.' >&2; exit 1; }
 
 setup: node_modules/.make-install-stamp
@@ -65,7 +65,7 @@ check-crystal:
 	@command -v crystal >/dev/null 2>&1 && command -v shards >/dev/null 2>&1 || { echo 'Install Crystal >= 1.17 and shards to run native checks.' >&2; exit 1; }
 	shards install --frozen
 	crystal tool format --check src spec examples
-	bin/ameba
+	crystal run lib/ameba/bin/ameba.cr
 	crystal spec --error-trace
 
 clean:

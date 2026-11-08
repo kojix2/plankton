@@ -11,7 +11,7 @@ osc(frequency, 0.045, 1.4).modulate(noise(3), 0.2).kaleid(5).out
 
 ## Run
 
-Requires Node.js >= 22 (24 recommended) and Make. Native Crystal is not needed
+Use the latest Node.js release (>= 22) and Make. Native Crystal is not needed
 to run the app.
 
 ```sh

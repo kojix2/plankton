@@ -24,14 +24,15 @@ jobs:
       contents: read
       pages: read
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@main
         with:
           name: checked-site
           path: dist
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/configure-pages@main
+      - uses: actions/upload-pages-artifact@main
         with:
           path: dist
+          include-hidden-files: true
 
   deploy:
     needs: package
@@ -45,4 +46,4 @@ jobs:
     steps:
       - name: Deploy checked artifact
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@main
