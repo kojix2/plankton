@@ -1,0 +1,129 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "op": "rect",
+      "args": [
+        {
+          "op": "const",
+          "value": 0.32
+        },
+        {
+          "op": "const",
+          "value": 0.1
+        },
+        {
+          "op": "const",
+          "value": 0.015
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "rotate",
+      "args": [
+        {
+          "op": "mul",
+          "args": [
+            {
+              "op": "time"
+            },
+            {
+              "op": "const",
+              "value": 0.6
+            }
+          ]
+        },
+        {
+          "op": "const",
+          "value": 0
+        }
+      ],
+      "inputs": [
+        0
+      ]
+    },
+    {
+      "op": "color",
+      "args": [
+        {
+          "op": "const",
+          "value": 0.12
+        },
+        {
+          "op": "const",
+          "value": 0.8
+        },
+        {
+          "op": "const",
+          "value": 1
+        },
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": [
+        1
+      ]
+    },
+    {
+      "op": "src",
+      "args": [
+        {
+          "op": "const",
+          "value": 0
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "scale",
+      "args": [
+        {
+          "op": "const",
+          "value": 1.006
+        },
+        {
+          "op": "const",
+          "value": 1
+        },
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": [
+        3
+      ]
+    },
+    {
+      "op": "brightness",
+      "args": [
+        {
+          "op": "const",
+          "value": -0.008
+        }
+      ],
+      "inputs": [
+        4
+      ]
+    },
+    {
+      "op": "layer",
+      "args": [],
+      "inputs": [
+        5,
+        2
+      ]
+    }
+  ],
+  "outputs": [
+    6,
+    null,
+    null,
+    null
+  ],
+  "display": 0,
+  "params": []
+}

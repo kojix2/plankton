@@ -1,0 +1,31 @@
+{
+  "name": "hydra-crystal",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A browser-only Crystal/Wasm visual synthesizer with a Hydra-inspired DSL",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "presets": "node scripts/seed-previews.mjs",
+    "check": "node scripts/check.mjs",
+    "test": "node --test test/*.test.mjs",
+    "test:wasm": "node --experimental-wasm-exnref scripts/test-wasm.mjs",
+    "test:browser": "node scripts/test-browser.mjs",
+    "test:playwright": "playwright test",
+    "build": "node scripts/build.mjs",
+    "build:cdn": "node scripts/build.mjs --cdn",
+    "dev": "node scripts/serve.mjs",
+    "lint:crystal": "bin/ameba",
+    "test:crystal": "crystal spec"
+  },
+  "dependencies": {
+    "@live-codes/crystal-wasm": "0.4.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.0"
+  }
+}

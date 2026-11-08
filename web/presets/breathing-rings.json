@@ -1,0 +1,231 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "op": "circle",
+      "args": [
+        {
+          "op": "add",
+          "args": [
+            {
+              "op": "const",
+              "value": 0.16
+            },
+            {
+              "op": "mul",
+              "args": [
+                {
+                  "op": "div",
+                  "args": [
+                    {
+                      "op": "sub",
+                      "args": [
+                        {
+                          "op": "sin",
+                          "args": [
+                            {
+                              "op": "mul",
+                              "args": [
+                                {
+                                  "op": "time"
+                                },
+                                {
+                                  "op": "const",
+                                  "value": 0.7
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "op": "const",
+                          "value": -1
+                        }
+                      ]
+                    },
+                    {
+                      "op": "sub",
+                      "args": [
+                        {
+                          "op": "const",
+                          "value": 1
+                        },
+                        {
+                          "op": "const",
+                          "value": -1
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "op": "sub",
+                  "args": [
+                    {
+                      "op": "const",
+                      "value": 0.38
+                    },
+                    {
+                      "op": "const",
+                      "value": 0.16
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "op": "const",
+          "value": 0.015
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "circle",
+      "args": [
+        {
+          "op": "mul",
+          "args": [
+            {
+              "op": "add",
+              "args": [
+                {
+                  "op": "const",
+                  "value": 0.16
+                },
+                {
+                  "op": "mul",
+                  "args": [
+                    {
+                      "op": "div",
+                      "args": [
+                        {
+                          "op": "sub",
+                          "args": [
+                            {
+                              "op": "sin",
+                              "args": [
+                                {
+                                  "op": "mul",
+                                  "args": [
+                                    {
+                                      "op": "time"
+                                    },
+                                    {
+                                      "op": "const",
+                                      "value": 0.7
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "op": "const",
+                              "value": -1
+                            }
+                          ]
+                        },
+                        {
+                          "op": "sub",
+                          "args": [
+                            {
+                              "op": "const",
+                              "value": 1
+                            },
+                            {
+                              "op": "const",
+                              "value": -1
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "op": "sub",
+                      "args": [
+                        {
+                          "op": "const",
+                          "value": 0.38
+                        },
+                        {
+                          "op": "const",
+                          "value": 0.16
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "op": "const",
+              "value": 0.85
+            }
+          ]
+        },
+        {
+          "op": "const",
+          "value": 0.015
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "diff",
+      "args": [],
+      "inputs": [
+        0,
+        1
+      ]
+    },
+    {
+      "op": "gradient",
+      "args": [
+        {
+          "op": "const",
+          "value": 0.08
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "mult",
+      "args": [
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": [
+        2,
+        3
+      ]
+    },
+    {
+      "op": "repeat",
+      "args": [
+        {
+          "op": "const",
+          "value": 3
+        },
+        {
+          "op": "const",
+          "value": 2
+        }
+      ],
+      "inputs": [
+        4
+      ]
+    }
+  ],
+  "outputs": [
+    5,
+    null,
+    null,
+    null
+  ],
+  "display": 0,
+  "params": []
+}

@@ -1,0 +1,131 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "op": "src",
+      "args": [
+        {
+          "op": "const",
+          "value": 0
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "scale",
+      "args": [
+        {
+          "op": "const",
+          "value": 1.015
+        },
+        {
+          "op": "const",
+          "value": 1
+        },
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": [
+        0
+      ]
+    },
+    {
+      "op": "rotate",
+      "args": [
+        {
+          "op": "const",
+          "value": 0.012
+        },
+        {
+          "op": "const",
+          "value": 0
+        }
+      ],
+      "inputs": [
+        1
+      ]
+    },
+    {
+      "op": "osc",
+      "args": [
+        {
+          "op": "const",
+          "value": 7
+        },
+        {
+          "op": "const",
+          "value": 0.06
+        },
+        {
+          "op": "const",
+          "value": 1.8
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "kaleid",
+      "args": [
+        {
+          "op": "const",
+          "value": 5
+        }
+      ],
+      "inputs": [
+        3
+      ]
+    },
+    {
+      "op": "blend",
+      "args": [
+        {
+          "op": "sub",
+          "args": [
+            {
+              "op": "const",
+              "value": 1
+            },
+            {
+              "op": "param",
+              "key": "memory"
+            }
+          ]
+        }
+      ],
+      "inputs": [
+        2,
+        4
+      ]
+    },
+    {
+      "op": "saturate",
+      "args": [
+        {
+          "op": "const",
+          "value": 1.01
+        }
+      ],
+      "inputs": [
+        5
+      ]
+    }
+  ],
+  "outputs": [
+    6,
+    null,
+    null,
+    null
+  ],
+  "display": 0,
+  "params": [
+    {
+      "key": "memory",
+      "value": 0.94,
+      "min": 0.5,
+      "max": 0.99,
+      "step": 0.01
+    }
+  ]
+}

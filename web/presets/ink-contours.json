@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "op": "noise",
+      "args": [
+        {
+          "op": "const",
+          "value": 5
+        },
+        {
+          "op": "const",
+          "value": 0.12
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "posterize",
+      "args": [
+        {
+          "op": "param",
+          "key": "levels"
+        },
+        {
+          "op": "const",
+          "value": 0.8
+        }
+      ],
+      "inputs": [
+        0
+      ]
+    },
+    {
+      "op": "color",
+      "args": [
+        {
+          "op": "const",
+          "value": 0.85
+        },
+        {
+          "op": "const",
+          "value": 0.96
+        },
+        {
+          "op": "const",
+          "value": 1
+        },
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": [
+        1
+      ]
+    },
+    {
+      "op": "contrast",
+      "args": [
+        {
+          "op": "const",
+          "value": 1.6
+        }
+      ],
+      "inputs": [
+        2
+      ]
+    }
+  ],
+  "outputs": [
+    3,
+    null,
+    null,
+    null
+  ],
+  "display": 0,
+  "params": [
+    {
+      "key": "levels",
+      "value": 6,
+      "min": 2,
+      "max": 16,
+      "step": 1
+    }
+  ]
+}

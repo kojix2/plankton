@@ -1,0 +1,535 @@
+[
+  {
+    "name": "osc",
+    "kind": "source",
+    "inputs": 0,
+    "args": [
+      {
+        "name": "frequency",
+        "default": 10
+      },
+      {
+        "name": "sync",
+        "default": 0.1
+      },
+      {
+        "name": "offset",
+        "default": 1
+      }
+    ],
+    "description": "Animated RGB oscillator."
+  },
+  {
+    "name": "noise",
+    "kind": "source",
+    "inputs": 0,
+    "args": [
+      {
+        "name": "scale",
+        "default": 10
+      },
+      {
+        "name": "speed",
+        "default": 0.1
+      }
+    ],
+    "description": "Smooth, animated value noise (not Hydra simplex noise)."
+  },
+  {
+    "name": "voronoi",
+    "kind": "source",
+    "inputs": 0,
+    "args": [
+      {
+        "name": "scale",
+        "default": 5
+      },
+      {
+        "name": "speed",
+        "default": 0.3
+      },
+      {
+        "name": "blending",
+        "default": 0.3
+      }
+    ],
+    "description": "Animated cellular distance field."
+  },
+  {
+    "name": "shape",
+    "kind": "source",
+    "inputs": 0,
+    "args": [
+      {
+        "name": "sides",
+        "default": 3
+      },
+      {
+        "name": "radius",
+        "default": 0.3
+      },
+      {
+        "name": "smoothing",
+        "default": 0.01
+      }
+    ],
+    "description": "Antialiased regular polygon, with transparent background."
+  },
+  {
+    "name": "solid",
+    "kind": "source",
+    "inputs": 0,
+    "args": [
+      {
+        "name": "r",
+        "default": 0
+      },
+      {
+        "name": "g",
+        "default": 0
+      },
+      {
+        "name": "b",
+        "default": 0
+      },
+      {
+        "name": "a",
+        "default": 1
+      }
+    ],
+    "description": "Solid RGBA color."
+  },
+  {
+    "name": "gradient",
+    "kind": "source",
+    "inputs": 0,
+    "args": [
+      {
+        "name": "speed",
+        "default": 0.1
+      }
+    ],
+    "description": "Animated spectral gradient."
+  },
+  {
+    "name": "circle",
+    "kind": "source",
+    "inputs": 0,
+    "args": [
+      {
+        "name": "radius",
+        "default": 0.3
+      },
+      {
+        "name": "smoothing",
+        "default": 0.01
+      }
+    ],
+    "description": "Aspect-correct circle with transparent background."
+  },
+  {
+    "name": "rect",
+    "kind": "source",
+    "inputs": 0,
+    "args": [
+      {
+        "name": "width",
+        "default": 0.5
+      },
+      {
+        "name": "height",
+        "default": 0.5
+      },
+      {
+        "name": "smoothing",
+        "default": 0.01
+      }
+    ],
+    "description": "Aspect-correct centered rectangle."
+  },
+  {
+    "name": "rotate",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "angle",
+        "default": 0
+      },
+      {
+        "name": "speed",
+        "default": 0
+      }
+    ],
+    "description": "Rotate by radians, with optional radians per second."
+  },
+  {
+    "name": "scale",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "amount",
+        "default": 1
+      },
+      {
+        "name": "x",
+        "default": 1
+      },
+      {
+        "name": "y",
+        "default": 1
+      }
+    ],
+    "description": "Scale around the center; amount is the common factor."
+  },
+  {
+    "name": "scroll_x",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "amount",
+        "default": 0
+      },
+      {
+        "name": "speed",
+        "default": 0
+      }
+    ],
+    "description": "Horizontal offset and scrolling speed."
+  },
+  {
+    "name": "scroll_y",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "amount",
+        "default": 0
+      },
+      {
+        "name": "speed",
+        "default": 0
+      }
+    ],
+    "description": "Vertical offset and scrolling speed."
+  },
+  {
+    "name": "repeat",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "x",
+        "default": 3
+      },
+      {
+        "name": "y",
+        "default": 3
+      }
+    ],
+    "description": "Repeat a texture in a grid."
+  },
+  {
+    "name": "pixelate",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "x",
+        "default": 20
+      },
+      {
+        "name": "y",
+        "default": 20
+      }
+    ],
+    "description": "Quantize coordinates into a grid."
+  },
+  {
+    "name": "kaleid",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "sides",
+        "default": 4
+      }
+    ],
+    "description": "Mirror radial sectors into a kaleidoscope."
+  },
+  {
+    "name": "color",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "r",
+        "default": 1
+      },
+      {
+        "name": "g",
+        "default": 1
+      },
+      {
+        "name": "b",
+        "default": 1
+      },
+      {
+        "name": "a",
+        "default": 1
+      }
+    ],
+    "description": "Multiply RGBA channels."
+  },
+  {
+    "name": "brightness",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "amount",
+        "default": 0
+      }
+    ],
+    "description": "Add to RGB channels."
+  },
+  {
+    "name": "contrast",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "amount",
+        "default": 1
+      }
+    ],
+    "description": "Adjust contrast about 0.5."
+  },
+  {
+    "name": "saturate",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "amount",
+        "default": 1
+      }
+    ],
+    "description": "Adjust saturation about luminance."
+  },
+  {
+    "name": "invert",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "amount",
+        "default": 1
+      }
+    ],
+    "description": "Mix with the inverted color."
+  },
+  {
+    "name": "hue",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "amount",
+        "default": 0
+      }
+    ],
+    "description": "Shift hue in turns."
+  },
+  {
+    "name": "colorama",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "amount",
+        "default": 0.1
+      }
+    ],
+    "description": "Shift hue and fold saturation/brightness."
+  },
+  {
+    "name": "posterize",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "bins",
+        "default": 3
+      },
+      {
+        "name": "gamma",
+        "default": 1
+      }
+    ],
+    "description": "Reduce the number of color levels."
+  },
+  {
+    "name": "thresh",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "threshold",
+        "default": 0.5
+      },
+      {
+        "name": "tolerance",
+        "default": 0.04
+      }
+    ],
+    "description": "Black/white luminance threshold."
+  },
+  {
+    "name": "luma",
+    "kind": "transform",
+    "inputs": 1,
+    "args": [
+      {
+        "name": "threshold",
+        "default": 0.5
+      },
+      {
+        "name": "tolerance",
+        "default": 0.1
+      }
+    ],
+    "description": "Turn luminance into an alpha mask."
+  },
+  {
+    "name": "blend",
+    "kind": "combine",
+    "inputs": 2,
+    "args": [
+      {
+        "name": "amount",
+        "default": 0.5
+      }
+    ],
+    "description": "Interpolate between two textures."
+  },
+  {
+    "name": "add",
+    "kind": "combine",
+    "inputs": 2,
+    "args": [
+      {
+        "name": "amount",
+        "default": 1
+      }
+    ],
+    "description": "Add another texture."
+  },
+  {
+    "name": "sub",
+    "kind": "combine",
+    "inputs": 2,
+    "args": [
+      {
+        "name": "amount",
+        "default": 1
+      }
+    ],
+    "description": "Subtract another texture."
+  },
+  {
+    "name": "mult",
+    "kind": "combine",
+    "inputs": 2,
+    "args": [
+      {
+        "name": "amount",
+        "default": 1
+      }
+    ],
+    "description": "Multiply by another texture."
+  },
+  {
+    "name": "diff",
+    "kind": "combine",
+    "inputs": 2,
+    "args": [],
+    "description": "Absolute color difference."
+  },
+  {
+    "name": "mask",
+    "kind": "combine",
+    "inputs": 2,
+    "args": [],
+    "description": "Use another texture’s luminance and alpha as a mask."
+  },
+  {
+    "name": "layer",
+    "kind": "combine",
+    "inputs": 2,
+    "args": [],
+    "description": "Alpha-composite another texture over this texture."
+  },
+  {
+    "name": "modulate",
+    "kind": "combine",
+    "inputs": 2,
+    "args": [
+      {
+        "name": "amount",
+        "default": 0.1
+      }
+    ],
+    "description": "Warp coordinates using centered red/green channels."
+  },
+  {
+    "name": "modulate_scale",
+    "kind": "combine",
+    "inputs": 2,
+    "args": [
+      {
+        "name": "amount",
+        "default": 0.5
+      },
+      {
+        "name": "offset",
+        "default": 1
+      }
+    ],
+    "description": "Scale coordinates using another texture."
+  },
+  {
+    "name": "modulate_rotate",
+    "kind": "combine",
+    "inputs": 2,
+    "args": [
+      {
+        "name": "amount",
+        "default": 1
+      },
+      {
+        "name": "offset",
+        "default": 0
+      }
+    ],
+    "description": "Rotate coordinates using another texture."
+  },
+  {
+    "name": "modulate_pixelate",
+    "kind": "combine",
+    "inputs": 2,
+    "args": [
+      {
+        "name": "multiple",
+        "default": 10
+      },
+      {
+        "name": "offset",
+        "default": 3
+      }
+    ],
+    "description": "Modulate the pixel grid resolution."
+  }
+]

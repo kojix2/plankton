@@ -1,0 +1,65 @@
+// This test must actually compile Crystal. Missing dependencies are errors, not
+// skips, and preset JSON is never accepted as a substitute for a compiler result.
+import { createCompiler } from '@live-codes/crystal-wasm';
+import { readFile, readdir } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { parseProgramOutput, validateGraph } from '../web/js/graph.js';
+import { OPERATIONS } from '../web/js/operations.js';
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const files = {};
+async function sources(directory, prefix = '') {
+    for (const item of await readdir(directory, { withFileTypes: true })) {
+        if (item.isDirectory())
+            await sources(path.join(directory, item.name), prefix + item.name + '/');
+        else if (item.name.endsWith('.cr'))
+            files[prefix + item.name] = await readFile(path.join(directory, item.name), 'utf8');
+    }
+}
+await sources(path.join(root, 'src'));
+const compiler = await createCompiler();
+let count = 0;
+try {
+    const run = async (source) => compiler.run('require "./hydra"\nrequire "./sketch"\nHydra.emit\n', '', { files: { ...files, 'sketch.cr': source } });
+    const check = async (source) => {
+        const result = await run(source);
+        assert.equal(result.ok, true, [...(result.errors ?? []), result.stderr].join('\n'));
+        assert.equal(result.exitCode, 0);
+        count++;
+        return parseProgramOutput(result.stdout).graph;
+    };
+    const manifest = JSON.parse(await readFile(path.join(root, 'examples/manifest.json'), 'utf8'));
+    for (const example of manifest) {
+        const graph = await check(await readFile(path.join(root, example.source), 'utf8'));
+        const expected = JSON.parse(await readFile(path.join(root, 'web', example.preview), 'utf8'));
+        assert.deepEqual(graph, expected, `${example.id}: preset differs from actual Crystal/Wasm output`);
+        console.log(`Wasm compiled and matched preview: ${example.id}`);
+    }
+    // Exercise all generated overloads in real Crystal, not only the twelve samples.
+    let source = '';
+    for (const op of OPERATIONS) {
+        source += op.kind === 'source' ? `${op.name}.out\n` : op.kind === 'combine' ? `osc.${op.name}(noise).out\n` : `osc.${op.name}.out\n`;
+    }
+    validateGraph(await check(source));
+    await check('n = 2 * time + 1.0 - mouse.y / 2\nosc(n).rotate(sin(time)).out\n');
+    await check('osc(lerp(2, 10, time.sin)).out\n');
+    const media = await check('src(s0).blend(src(s3), audio.fft(31)).brightness(audio.level).rotate(beat * 0.1 + delta).out\n');
+    assert.equal(media.nodes[0].op, 'input');
+    assert.equal(media.nodes[1].args[0].value, 3);
+    assert.deepEqual(media.nodes[2].args[0], { op: 'fft', value: 31 });
+    assert.equal(media.nodes[3].args[0].op, 'audio_level');
+    const invalidBand = await run('osc(audio.fft(32)).out');
+    assert.equal(invalidBand.ok, false);
+    console.log('Crystal rejects out-of-range FFT bands.');
+    const invalid = await run('osc("wrong type").out');
+    assert.equal(invalid.ok, false);
+    console.log('Crystal rejects invalid types.');
+    const empty = await run('puts "no graph"');
+    assert.equal(empty.ok, false);
+    console.log('Runtime rejects missing output.');
+    console.log(`${count} actual Crystal/Wasm programs passed, plus three negative checks.`);
+}
+finally {
+    await compiler.dispose();
+}

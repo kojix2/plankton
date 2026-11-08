@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net; worker-src 'self'; connect-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; media-src 'self' blob:; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="description" content="A Hydra-inspired visual synthesizer, written in real Crystal and compiled to WebAssembly in your browser.">
+  <title>Hydra / Crystal — Visual synthesizer</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./css/app.css">
+  <script type="module" src="./js/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Hydra Crystal home">
+      <strong>hydra / crystal</strong>
+    </a>
+    <div class="project-name"><span id="project-title">Chromatic tide</span></div>
+    <nav class="top-actions" aria-label="Project actions">
+      <button id="gallery-button" class="quiet" data-i18n="gallery">Examples</button>
+      <button id="inputs-button" class="quiet" data-i18n="inputs">Inputs</button>
+      <button id="api-button" class="quiet" data-i18n="api">Reference</button>
+      <button id="share-button" class="quiet" data-i18n="share">Share</button>
+      <label class="language-picker"><span class="sr-only" data-i18n="language">Language</span><select id="language" aria-label="Language"></select></label>
+    </nav>
+  </header>
+  <main class="workspace">
+    <section class="source-panel" aria-label="Crystal source" data-i18n-aria="source">
+      <div class="panel-heading">
+        <div class="file-label"><strong>sketch.cr</strong><span id="edited-dot" data-i18n-title="edited" hidden>*</span></div>
+        <div class="source-actions">
+          <button id="open-button" class="quiet small" data-i18n="open">Open</button>
+          <button id="save-button" class="quiet small" data-i18n="save">Save</button>
+          <button id="stop-button" class="small" disabled data-i18n="stop">Stop</button>
+          <button id="run-button" class="primary"><span data-i18n="run">Run</span><kbd>⌘ ↵</kbd></button>
+        </div>
+      </div>
+      <div class="code-editor" id="editor">
+        <div class="gutter-clip" aria-hidden="true"><div class="editor-lines"></div></div>
+        <div class="code-clip" aria-hidden="true"><pre class="editor-paint"></pre></div>
+        <textarea id="source-code" aria-label="Crystal code" data-i18n-aria="source" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" wrap="off"></textarea>
+      </div>
+      <div class="editor-status"><span>Crystal</span><span id="cursor-position">Ln 1, Col 1</span></div>
+      <div class="console-panel">
+        <div class="console-heading"><strong data-i18n="console">Console</strong><span id="console-badge"></span><button id="clear-console" class="quiet small" data-i18n="clear">Clear</button></div>
+        <pre id="console" role="log" aria-live="polite"></pre>
+      </div>
+    </section>
+    <div id="splitter" class="splitter" role="separator" aria-orientation="vertical" aria-valuemin="28" aria-valuemax="65" aria-valuenow="44" tabindex="0" data-i18n-aria="resizePanels"></div>
+    <section class="view-panel" aria-label="Visual output" data-i18n-aria="view">
+      <div class="panel-heading view-heading">
+        <div class="view-label"><strong data-i18n="view">Output</strong><span id="view-badge" class="badge" data-i18n="preview">Preset preview</span></div>
+        <div class="view-actions"><span id="fps">— fps</span><button id="fullscreen-button" class="icon-button" data-i18n-title="fullscreen" data-i18n-aria="fullscreen">⛶</button></div>
+      </div>
+      <div class="canvas-stage" id="canvas-stage">
+        <canvas id="view" width="960" height="540" data-i18n-aria="view" aria-label="Visual output"></canvas>
+        <div id="gpu-error" class="gpu-error" hidden></div>
+      </div>
+      <div class="stage-info"><span id="canvas-resolution">960 × 540</span><span id="scene-time">00:00</span></div>
+      <div class="transport">
+        <div class="transport-left"><button id="pause-button" data-i18n="pause">Pause</button><button id="reset-button" class="quiet" data-i18n="reset">Reset</button><label class="select-label"><span data-i18n="output">Buffer</span><select id="output-select" aria-label="Output buffer" data-i18n-aria="output"><option>o0</option><option>o1</option><option>o2</option><option>o3</option></select></label></div>
+        <div class="transport-right"><label class="select-label"><span class="sr-only" data-i18n="resolution">Resolution</span><select id="resolution" aria-label="Resolution" data-i18n-aria="resolution"><option value="540">540p</option><option value="720" selected>720p</option><option value="1080">1080p</option></select></label><button id="snapshot-button" class="quiet" data-i18n="snapshot">PNG</button></div>
+      </div>
+      <div class="time-controls" aria-label="Time controls" data-i18n-aria="timeControls">
+        <label><span data-i18n="speed">Speed</span><input id="time-speed" type="range" min="0" max="4" step="0.1" value="1"><output id="time-speed-value" for="time-speed">1.0×</output></label>
+        <label><span data-i18n="seconds">Seconds</span><input id="time-position" type="number" min="0" max="86400" step="0.001" value="0"></label>
+        <button id="seek-button" class="quiet small" data-i18n="seek">Seek</button>
+        <button id="step-button" class="quiet small" data-i18n="step">+1 frame</button>
+        <label><span>BPM</span><input id="bpm" type="number" min="20" max="300" step="1" value="120"></label>
+      </div>
+      <section class="parameter-panel" data-i18n-title="parametersHint">
+        <div class="section-heading"><h2 data-i18n="controls">Live controls</h2></div>
+        <div id="parameters" class="parameter-grid"></div>
+      </section>
+      <section class="patch-panel">
+        <div class="section-heading"><h2 data-i18n="patch">Signal chain</h2><span id="node-count" class="mini-label">6 NODES</span></div>
+        <div id="patch-strip" class="patch-strip"></div>
+        <div class="patch-bottom"><p id="sample-description"></p><button id="shader-button" class="quiet small">GLSL</button></div>
+      </section>
+      <p class="preview-note" id="preview-note" data-i18n="previewHint">This is a bundled preview. Run compiles the code in the editor.</p>
+    </section>
+  </main>
+  <footer class="statusbar"><div><span id="status-text" data-i18n="ready">Ready</span><progress id="progress" max="1" value="0" hidden aria-label="Compiler download" data-i18n-aria="loading"></progress></div><div><span id="compiler-mode"></span><span data-i18n="privacy">Your code stays in this tab</span></div></footer>
+  <input type="file" id="file-input" accept=".cr,text/plain" hidden>
+  <input type="file" id="media-file" accept="image/*,video/*" hidden>
+  <dialog id="inputs-dialog" class="wide-dialog">
+    <div class="dialog-heading"><h2 data-i18n="inputsTitle">Media &amp; sound inputs</h2><button class="close-dialog" data-i18n-aria="close">×</button></div>
+    <p class="dialog-intro" data-i18n="inputsHint">Load a local image or video, or enable a camera. Choose a slot and use src(s0) in your code. Files and device access stay in this tab.</p>
+    <div id="input-slots" class="input-slots"></div>
+    <div class="input-actions">
+      <label><span data-i18n="inputSlot">Slot</span><select id="input-slot"><option value="0">s0</option><option value="1">s1</option><option value="2">s2</option><option value="3">s3</option></select></label>
+      <button id="media-file-button" data-i18n="loadMedia">Image / video</button>
+      <button id="camera-button" data-i18n="enableCamera">Enable camera</button>
+      <button id="clear-input-button" class="quiet" data-i18n="clearInput">Clear slot</button>
+      <button id="use-input-button" class="quiet" data-i18n="useInput">Write input sketch</button>
+    </div>
+    <p class="input-help"><code>src(s0).kaleid(4).out</code></p>
+    <section class="audio-input">
+      <div class="section-heading"><h3 data-i18n="microphone">Microphone / FFT</h3><span id="mic-status" class="mini-label" data-i18n="deviceOff">Off</span></div>
+      <canvas id="spectrum" width="640" height="80" role="img" aria-label="32-band audio spectrum" data-i18n-aria="spectrum"></canvas>
+      <div class="input-actions">
+        <button id="mic-button" data-i18n="enableMic">Enable microphone</button>
+        <label><span data-i18n="audioGain">Gain</span><input id="audio-gain" type="range" min="0" max="8" step="0.1" value="1"></label>
+        <button id="use-audio-button" class="quiet" data-i18n="useAudio">Write audio sketch</button>
+      </div>
+      <p class="input-help" data-i18n="audioHint">audio.fft(0…31): 32 logarithmic bands, low to high. audio.level: RMS volume. Both return 0…1 and are zero while the microphone is off. Sound is not sent to speakers.</p>
+    </section>
+    <p class="input-help" id="input-message" role="status" aria-live="polite"></p>
+    <p class="input-help" data-i18n="devicesHint">Camera and microphone start only after you enable them. Stop releases devices. Reloading or opening a shared link never enables them automatically. HTTPS or localhost is required.</p>
+  </dialog>
+  <dialog id="gallery-dialog" class="wide-dialog"><div class="dialog-heading"><h2 data-i18n="gallery">Examples</h2><button class="close-dialog" data-i18n-aria="close">×</button></div><p class="dialog-intro" data-i18n="galleryHint">Load an example to explore its preview. Run compiles your changes.</p><div id="gallery-grid" class="gallery-grid"></div></dialog>
+  <dialog id="api-dialog" class="wide-dialog"><div class="dialog-heading"><h2 data-i18n="api">Reference</h2><button class="close-dialog" data-i18n-aria="close">×</button></div><div class="help-layout"><div><p data-i18n="helpIntro"></p><pre class="help-code">osc(10, 0.1, 1.4)
+  .modulate(noise(3), 0.2)
+  .kaleid(5)
+  .out</pre><h3 data-i18n="apiSignals">Live expressions</h3><p data-i18n="helpSignals"></p><pre class="help-code">time.sin * 4 + 8
+mouse.x * 20
+param("speed", 0.1, min: 0.0, max: 1.0)</pre><h3 data-i18n="inputs">Inputs</h3><p data-i18n="inputsHint"></p><pre class="help-code">src(s0).kaleid(4).out
+osc(6 + audio.fft(0) * 24)
+  .brightness(audio.level)
+  .rotate(beat * 0.08).out</pre><h3 data-i18n="feedback">Feedback</h3><p data-i18n="helpFeedback"></p><pre class="help-code">src(o0).scale(1.01)
+  .blend(osc(8), 0.05)
+  .out(o0)</pre><p data-i18n="helpLimit"></p><p data-i18n="helpShortcuts"></p><p data-i18n="apiCompatibility"></p></div><div id="api-list" class="api-list"></div></div></dialog>
+  <dialog id="share-dialog"><div class="dialog-heading"><h2 data-i18n="share">Share</h2><button class="close-dialog" data-i18n-aria="close">×</button></div><p data-i18n="shareHint"></p><label for="share-url" class="sr-only" data-i18n="share">Share link</label><textarea id="share-url" readonly rows="5"></textarea><div class="dialog-footer"><button id="copy-link" class="primary" data-i18n="copy">Copy link</button></div></dialog>
+  <dialog id="shader-dialog" class="wide-dialog"><div class="dialog-heading"><h2>GLSL <span class="dim">/ WebGL 2</span></h2><button class="close-dialog" data-i18n-aria="close">×</button></div><pre id="shader-code" class="shader-code"></pre><div class="dialog-footer"><button id="export-graph" data-i18n="exportGraph">Export graph</button><button id="export-shader" class="primary" data-i18n="exportShader">Export GLSL</button></div></dialog>
+  <noscript>This application needs JavaScript and WebAssembly. No source is uploaded to a server.</noscript>
+</body>
+</html>

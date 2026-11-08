@@ -1,0 +1,411 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "op": "solid",
+      "args": [
+        {
+          "op": "const",
+          "value": 0
+        },
+        {
+          "op": "const",
+          "value": 0
+        },
+        {
+          "op": "const",
+          "value": 0
+        },
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "shape",
+      "args": [
+        {
+          "op": "const",
+          "value": 3
+        },
+        {
+          "op": "const",
+          "value": 0.24
+        },
+        {
+          "op": "const",
+          "value": 0.008
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "rotate",
+      "args": [
+        {
+          "op": "const",
+          "value": 0
+        },
+        {
+          "op": "const",
+          "value": 0
+        }
+      ],
+      "inputs": [
+        1
+      ]
+    },
+    {
+      "op": "add",
+      "args": [
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": [
+        0,
+        2
+      ]
+    },
+    {
+      "op": "shape",
+      "args": [
+        {
+          "op": "const",
+          "value": 3
+        },
+        {
+          "op": "const",
+          "value": 0.24
+        },
+        {
+          "op": "const",
+          "value": 0.008
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "rotate",
+      "args": [
+        {
+          "op": "const",
+          "value": 0.4487989505128276
+        },
+        {
+          "op": "const",
+          "value": 0
+        }
+      ],
+      "inputs": [
+        4
+      ]
+    },
+    {
+      "op": "add",
+      "args": [
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": [
+        3,
+        5
+      ]
+    },
+    {
+      "op": "shape",
+      "args": [
+        {
+          "op": "const",
+          "value": 3
+        },
+        {
+          "op": "const",
+          "value": 0.24
+        },
+        {
+          "op": "const",
+          "value": 0.008
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "rotate",
+      "args": [
+        {
+          "op": "const",
+          "value": 0.8975979010256552
+        },
+        {
+          "op": "const",
+          "value": 0
+        }
+      ],
+      "inputs": [
+        7
+      ]
+    },
+    {
+      "op": "add",
+      "args": [
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": [
+        6,
+        8
+      ]
+    },
+    {
+      "op": "shape",
+      "args": [
+        {
+          "op": "const",
+          "value": 3
+        },
+        {
+          "op": "const",
+          "value": 0.24
+        },
+        {
+          "op": "const",
+          "value": 0.008
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "rotate",
+      "args": [
+        {
+          "op": "const",
+          "value": 1.3463968515384828
+        },
+        {
+          "op": "const",
+          "value": 0
+        }
+      ],
+      "inputs": [
+        10
+      ]
+    },
+    {
+      "op": "add",
+      "args": [
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": [
+        9,
+        11
+      ]
+    },
+    {
+      "op": "shape",
+      "args": [
+        {
+          "op": "const",
+          "value": 3
+        },
+        {
+          "op": "const",
+          "value": 0.24
+        },
+        {
+          "op": "const",
+          "value": 0.008
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "rotate",
+      "args": [
+        {
+          "op": "const",
+          "value": 1.7951958020513104
+        },
+        {
+          "op": "const",
+          "value": 0
+        }
+      ],
+      "inputs": [
+        13
+      ]
+    },
+    {
+      "op": "add",
+      "args": [
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": [
+        12,
+        14
+      ]
+    },
+    {
+      "op": "shape",
+      "args": [
+        {
+          "op": "const",
+          "value": 3
+        },
+        {
+          "op": "const",
+          "value": 0.24
+        },
+        {
+          "op": "const",
+          "value": 0.008
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "rotate",
+      "args": [
+        {
+          "op": "const",
+          "value": 2.243994752564138
+        },
+        {
+          "op": "const",
+          "value": 0
+        }
+      ],
+      "inputs": [
+        16
+      ]
+    },
+    {
+      "op": "add",
+      "args": [
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": [
+        15,
+        17
+      ]
+    },
+    {
+      "op": "shape",
+      "args": [
+        {
+          "op": "const",
+          "value": 3
+        },
+        {
+          "op": "const",
+          "value": 0.24
+        },
+        {
+          "op": "const",
+          "value": 0.008
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "rotate",
+      "args": [
+        {
+          "op": "const",
+          "value": 2.6927937030769655
+        },
+        {
+          "op": "const",
+          "value": 0
+        }
+      ],
+      "inputs": [
+        19
+      ]
+    },
+    {
+      "op": "add",
+      "args": [
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": [
+        18,
+        20
+      ]
+    },
+    {
+      "op": "osc",
+      "args": [
+        {
+          "op": "const",
+          "value": 4
+        },
+        {
+          "op": "const",
+          "value": 0.04
+        },
+        {
+          "op": "const",
+          "value": 1.6
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "mult",
+      "args": [
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": [
+        21,
+        22
+      ]
+    },
+    {
+      "op": "rotate",
+      "args": [
+        {
+          "op": "const",
+          "value": 0
+        },
+        {
+          "op": "const",
+          "value": 0.08
+        }
+      ],
+      "inputs": [
+        23
+      ]
+    }
+  ],
+  "outputs": [
+    24,
+    null,
+    null,
+    null
+  ],
+  "display": 0,
+  "params": []
+}

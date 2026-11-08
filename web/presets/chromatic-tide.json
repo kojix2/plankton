@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "op": "osc",
+      "args": [
+        {
+          "op": "param",
+          "key": "frequency"
+        },
+        {
+          "op": "const",
+          "value": 0.045
+        },
+        {
+          "op": "const",
+          "value": 1.4
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "noise",
+      "args": [
+        {
+          "op": "const",
+          "value": 2.8
+        },
+        {
+          "op": "const",
+          "value": 0.12
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "modulate",
+      "args": [
+        {
+          "op": "const",
+          "value": 0.22
+        }
+      ],
+      "inputs": [
+        0,
+        1
+      ]
+    },
+    {
+      "op": "rotate",
+      "args": [
+        {
+          "op": "const",
+          "value": 0
+        },
+        {
+          "op": "const",
+          "value": 0.04
+        }
+      ],
+      "inputs": [
+        2
+      ]
+    },
+    {
+      "op": "kaleid",
+      "args": [
+        {
+          "op": "param",
+          "key": "folds"
+        }
+      ],
+      "inputs": [
+        3
+      ]
+    },
+    {
+      "op": "color",
+      "args": [
+        {
+          "op": "const",
+          "value": 0.8
+        },
+        {
+          "op": "const",
+          "value": 0.65
+        },
+        {
+          "op": "const",
+          "value": 1.3
+        },
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": [
+        4
+      ]
+    }
+  ],
+  "outputs": [
+    5,
+    null,
+    null,
+    null
+  ],
+  "display": 0,
+  "params": [
+    {
+      "key": "frequency",
+      "value": 8,
+      "min": 1,
+      "max": 40,
+      "step": 0.1
+    },
+    {
+      "key": "folds",
+      "value": 5,
+      "min": 1,
+      "max": 12,
+      "step": 1
+    }
+  ]
+}

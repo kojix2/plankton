@@ -1,0 +1,29 @@
+# JavaScript dependencies and generated static website
+/node_modules/
+/dist/
+
+# Crystal shards, build products and caches
+/lib/
+/bin/
+/.crystal/
+/.shards/
+*.dwarf
+*.dSYM/
+
+# Tests / development
+/test-results/
+/coverage/
+/tmp/
+*.log
+!/docs/validation/*.log
+.env
+.env.*
+!.env.example
+
+# Editor and platform metadata
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~

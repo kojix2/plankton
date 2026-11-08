@@ -1,0 +1,60 @@
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  crystal:
+    name: Crystal / Ameba
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: crystal-lang/install-crystal@v1
+        with:
+          crystal: 1.17.0
+      - run: shards install --frozen
+      - name: Format and syntax
+        run: crystal tool format --check src spec examples
+      - name: Ameba
+        run: bin/ameba
+      - name: DSL specs
+        run: crystal spec --error-trace
+
+  web:
+    name: JavaScript / real Wasm / browser
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run check
+      - run: npm test
+      - name: Real Crystal compiler integration (all examples)
+        run: npm run test:wasm
+      - name: Same-origin static build
+        run: npm run build
+      - name: Chrome WebGL and browser compilation
+        env:
+          CHROME_BIN: /usr/bin/google-chrome
+        run: npm run test:browser
+      - name: Playwright UI and real compiler regression tests
+        env:
+          CHROME_BIN: /usr/bin/google-chrome
+        run: npm run test:playwright
+      - uses: actions/upload-artifact@v4
+        with:
+          name: checked-site
+          path: dist/
+          include-hidden-files: true
+          retention-days: 7

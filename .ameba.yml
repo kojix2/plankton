@@ -1,0 +1,10 @@
+# Keep lint active for handwritten code, examples AND generated public wrappers.
+# The graph validator deliberately checks several independent bounds in one method.
+Globs:
+  - src/**/*.cr
+  - spec/**/*.cr
+  - examples/**/*.cr
+
+Metrics/CyclomaticComplexity:
+  MaxComplexity: 18
+

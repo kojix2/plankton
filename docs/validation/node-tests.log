@@ -1,0 +1,83 @@
+npm run check
+
+> hydra-crystal@0.1.0 check
+> node scripts/check.mjs
+
+Generated API files are current.
+Checked syntax of 26 JavaScript modules and all project JSON files.
+npm test
+
+> hydra-crystal@0.1.0 test
+> node --test test/*.test.mjs
+
+✔ compiler client returns results and reuses an idle worker (1.019041ms)
+✔ cancel terminates the worker including infinite user execution (0.288375ms)
+✔ late results cannot replace a new request (0.11675ms)
+✔ watchdog terminates an unresponsive compiler (5.073042ms)
+✔ worker failures reject without leaving a pending request (0.429792ms)
+✔ rejects source before making a worker (0.221875ms)
+✔ a stale worker messageerror cannot cancel the next request (0.166875ms)
+✔ preset validates and generates GLSL: chromatic-tide (4.451875ms)
+✔ preset validates and generates GLSL: glass-garden (0.633583ms)
+✔ preset validates and generates GLSL: orbital-bloom (0.365417ms)
+✔ preset validates and generates GLSL: feedback-tunnel (0.721458ms)
+✔ preset validates and generates GLSL: neon-lattice (0.680167ms)
+✔ preset validates and generates GLSL: mouse-mirror (0.530084ms)
+✔ preset validates and generates GLSL: two-signals (0.57625ms)
+✔ preset validates and generates GLSL: ink-contours (0.384959ms)
+✔ preset validates and generates GLSL: molten-prism (0.425916ms)
+✔ preset validates and generates GLSL: breathing-rings (1.023041ms)
+✔ preset validates and generates GLSL: crystal-petals (1.588625ms)
+✔ preset validates and generates GLSL: afterimage (0.928709ms)
+✔ schema has 36 unique operations (0.241542ms)
+✔ rejects invalid graph: version (0.471958ms)
+✔ rejects invalid graph: unknown shader op (0.140333ms)
+✔ rejects invalid graph: missing arguments (0.108458ms)
+✔ rejects invalid graph: non-finite literal (0.117958ms)
+✔ rejects invalid graph: oversized literal (0.105625ms)
+✔ rejects invalid graph: cycle (0.10375ms)
+✔ rejects invalid graph: missing output (0.105458ms)
+✔ rejects invalid graph: bad output id (0.108916ms)
+✔ rejects invalid graph: undefined parameter (0.113125ms)
+✔ rejects invalid graph: GLSL injection in parameter (0.093167ms)
+✔ rejects invalid graph: invalid range (0.099667ms)
+✔ rejects invalid graph: invalid step (0.093042ms)
+✔ rejects invalid graph: duplicate params (0.085167ms)
+✔ rejects invalid graph: signal code injection (0.093541ms)
+✔ rejects invalid graph: too many nodes (0.089875ms)
+✔ expression recursion is bounded (0.2075ms)
+✔ graph expansion work is bounded (0.178333ms)
+✔ stdout graph framing keeps ordinary logs (0.3965ms)
+✔ stdout requires one graph marker (0.112458ms)
+✔ stdout rejects malformed JSON and output flooding (0.5765ms)
+✔ share round-trip includes Unicode and project path (21.370625ms)
+✔ large repetitive source uses gzip (1.941042ms)
+✔ share rejects oversized source and ambiguous encodings (0.872084ms)
+✔ gzip expansion is bounded (1.721125ms)
+✔ empty or unrelated hash does not run code (0.103458ms)
+✔ media slots are constant, bounded and cannot inject shader identifiers (1.0205ms)
+✔ FFT band indices are validated before shader generation (0.140125ms)
+✔ logarithmic FFT bands distinguish a low tone from a high tone and silence (0.337334ms)
+✔ HTTP server supports project subpaths and correct module MIME (23.719542ms)
+✔ HTTP server rejects paths outside its base and unsupported methods (4.367166ms)
+✔ HTTP server implements HEAD and redirects base without slash (4.261917ms)
+✔ HTTP server cannot escape its root through symlinks (2.832125ms)
+✔ complete locale: en (4.273959ms)
+✔ complete locale: ja (0.469167ms)
+✔ complete locale: zh-CN (1.33875ms)
+✔ complete locale: ko (1.733834ms)
+✔ complete locale: es (0.71775ms)
+✔ complete locale: fr (0.716334ms)
+✔ complete locale: de (1.473833ms)
+✔ complete locale: pt-BR (0.42875ms)
+✔ complete locale: ru (1.056083ms)
+✔ HTML translation attributes resolve (0.980666ms)
+✔ interpolation does not interpret HTML (0.136125ms)
+ℹ tests 63
+ℹ suites 0
+ℹ pass 63
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 203.600291

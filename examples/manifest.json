@@ -1,0 +1,74 @@
+[
+  {
+    "id": "chromatic-tide",
+    "category": "color",
+    "source": "examples/chromatic-tide.cr",
+    "preview": "presets/chromatic-tide.json"
+  },
+  {
+    "id": "glass-garden",
+    "category": "color",
+    "source": "examples/glass-garden.cr",
+    "preview": "presets/glass-garden.json"
+  },
+  {
+    "id": "orbital-bloom",
+    "category": "geometry",
+    "source": "examples/orbital-bloom.cr",
+    "preview": "presets/orbital-bloom.json"
+  },
+  {
+    "id": "feedback-tunnel",
+    "category": "feedback",
+    "source": "examples/feedback-tunnel.cr",
+    "preview": "presets/feedback-tunnel.json"
+  },
+  {
+    "id": "neon-lattice",
+    "category": "geometry",
+    "source": "examples/neon-lattice.cr",
+    "preview": "presets/neon-lattice.json"
+  },
+  {
+    "id": "mouse-mirror",
+    "category": "interaction",
+    "source": "examples/mouse-mirror.cr",
+    "preview": "presets/mouse-mirror.json"
+  },
+  {
+    "id": "two-signals",
+    "category": "feedback",
+    "source": "examples/two-signals.cr",
+    "preview": "presets/two-signals.json"
+  },
+  {
+    "id": "ink-contours",
+    "category": "color",
+    "source": "examples/ink-contours.cr",
+    "preview": "presets/ink-contours.json"
+  },
+  {
+    "id": "molten-prism",
+    "category": "color",
+    "source": "examples/molten-prism.cr",
+    "preview": "presets/molten-prism.json"
+  },
+  {
+    "id": "breathing-rings",
+    "category": "interaction",
+    "source": "examples/breathing-rings.cr",
+    "preview": "presets/breathing-rings.json"
+  },
+  {
+    "id": "crystal-petals",
+    "category": "geometry",
+    "source": "examples/crystal-petals.cr",
+    "preview": "presets/crystal-petals.json"
+  },
+  {
+    "id": "afterimage",
+    "category": "feedback",
+    "source": "examples/afterimage.cr",
+    "preview": "presets/afterimage.json"
+  }
+]

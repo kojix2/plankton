@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "op": "shape",
+      "args": [
+        {
+          "op": "const",
+          "value": 7
+        },
+        {
+          "op": "const",
+          "value": 0.23
+        },
+        {
+          "op": "const",
+          "value": 0.015
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "repeat",
+      "args": [
+        {
+          "op": "const",
+          "value": 4
+        },
+        {
+          "op": "const",
+          "value": 3
+        }
+      ],
+      "inputs": [
+        0
+      ]
+    },
+    {
+      "op": "rotate",
+      "args": [
+        {
+          "op": "const",
+          "value": 0
+        },
+        {
+          "op": "const",
+          "value": 0.12
+        }
+      ],
+      "inputs": [
+        1
+      ]
+    },
+    {
+      "op": "color",
+      "args": [
+        {
+          "op": "const",
+          "value": 0.12
+        },
+        {
+          "op": "const",
+          "value": 0.9
+        },
+        {
+          "op": "const",
+          "value": 0.72
+        },
+        {
+          "op": "const",
+          "value": 1
+        }
+      ],
+      "inputs": [
+        2
+      ]
+    },
+    {
+      "op": "noise",
+      "args": [
+        {
+          "op": "const",
+          "value": 3
+        },
+        {
+          "op": "const",
+          "value": 0.1
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "modulate",
+      "args": [
+        {
+          "op": "const",
+          "value": 0.18
+        }
+      ],
+      "inputs": [
+        3,
+        4
+      ]
+    }
+  ],
+  "outputs": [
+    5,
+    null,
+    null,
+    null
+  ],
+  "display": 0,
+  "params": []
+}

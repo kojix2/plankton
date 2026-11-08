@@ -1,0 +1,2 @@
+# Optional offline fixture harness only; not needed by normal CI.
+playwright==1.57.0

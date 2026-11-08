@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "op": "voronoi",
+      "args": [
+        {
+          "op": "param",
+          "key": "cells"
+        },
+        {
+          "op": "const",
+          "value": 0.22
+        },
+        {
+          "op": "const",
+          "value": 0.75
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "osc",
+      "args": [
+        {
+          "op": "const",
+          "value": 4
+        },
+        {
+          "op": "const",
+          "value": 0.05
+        },
+        {
+          "op": "const",
+          "value": 0.7
+        }
+      ],
+      "inputs": []
+    },
+    {
+      "op": "modulate",
+      "args": [
+        {
+          "op": "const",
+          "value": 0.12
+        }
+      ],
+      "inputs": [
+        0,
+        1
+      ]
+    },
+    {
+      "op": "kaleid",
+      "args": [
+        {
+          "op": "const",
+          "value": 8
+        }
+      ],
+      "inputs": [
+        2
+      ]
+    },
+    {
+      "op": "hue",
+      "args": [
+        {
+          "op": "mul",
+          "args": [
+            {
+              "op": "time"
+            },
+            {
+              "op": "const",
+              "value": 0.025
+            }
+          ]
+        }
+      ],
+      "inputs": [
+        3
+      ]
+    },
+    {
+      "op": "contrast",
+      "args": [
+        {
+          "op": "const",
+          "value": 1.4
+        }
+      ],
+      "inputs": [
+        4
+      ]
+    }
+  ],
+  "outputs": [
+    5,
+    null,
+    null,
+    null
+  ],
+  "display": 0,
+  "params": [
+    {
+      "key": "cells",
+      "value": 6,
+      "min": 2,
+      "max": 16,
+      "step": 0.1
+    }
+  ]
+}
