@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@main
       - uses: actions/setup-node@main
         with:
-          node-version: latest
+          node-version: '26'
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run check

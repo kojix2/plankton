@@ -30,6 +30,10 @@ npm run build
 npm run dev
 ```
 
+The project `.npmrc` allows the pinned compiler release URL as a direct dependency
+with npm 12 (`allow-remote=root`). CI uses Node.js 26 to avoid prerelease versions
+selected by `latest`.
+
 `npm run build:cdn` uses the same pinned libgc fork commit from jsDelivr instead of bundling it.
 Generated Wasm programs use experimental Boehm garbage collection in both modes.
 For GitHub Pages, select **GitHub Actions** in the repository's Pages settings
