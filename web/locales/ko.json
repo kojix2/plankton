@@ -52,7 +52,7 @@
   "helpSignals": "time, frame, mouse.x, mouse.y는 일반 숫자가 아닌 GPU 표현식입니다. .sin, .cos, .map과 산술 연산을 사용할 수 있습니다. param은 슬라이더를 만듭니다. 이 표현식은 Crystal의 if나 루프 조건으로 사용할 수 없습니다.",
   "feedback": "피드백",
   "helpFeedback": "src(o0)부터 src(o3)까지는 이전 프레임을 읽습니다. 네 출력이 함께 갱신되므로 출력 순서가 타이밍에 영향을 주지 않습니다. 초기화는 버퍼와 시간을 지웁니다.",
-  "helpLimit": "현재 컴파일러의 Wasm 출력에는 GC가 없습니다. Crystal은 빌드마다 한 번 실행하고 애니메이션은 GPU에서 처리합니다. 소스·그래프 크기와 실행 시간에 제한이 있습니다. 중지 버튼으로 Worker를 종료할 수 있습니다.",
+  "helpLimit": "생성된 Wasm 프로그램은 실험적인 GC를 사용합니다. Crystal은 빌드마다 한 번 실행하고 애니메이션은 GPU에서 처리합니다. 소스·그래프 크기와 실행 시간에 제한이 있습니다. 중지 버튼으로 Worker를 종료할 수 있습니다.",
   "helpShortcuts": "Ctrl/⌘ + Enter: 실행 · Ctrl/⌘ + S: 저장 · Ctrl/⌘ + /: 주석 · Tab: 들여쓰기 · Escape: 대화상자 닫기.",
   "apiCompatibility": "Hydra에서 영감을 받았지만 완전 호환 포트는 아닙니다. 노이즈, 도형 좌표, 변조 방식이 다릅니다. 입력에서 로컬 미디어, 카메라, 마이크 분석을 지원합니다. JavaScript eval이나 임의 GLSL은 지원하지 않습니다.",
   "apiSource": "생성",
@@ -127,5 +127,6 @@
   "apiSearch": "API 검색",
   "apiGuide": "시작하기 및 기본 개념",
   "apiCategories": "API 분류",
-  "apiNoResults": "일치하는 API가 없습니다."
+  "apiNoResults": "일치하는 API가 없습니다.",
+  "instrumenting": "WebAssembly 준비 중…"
 }

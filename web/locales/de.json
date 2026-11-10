@@ -52,7 +52,7 @@
   "helpSignals": "time, frame, mouse.x und mouse.y sind GPU-Ausdrücke, keine gewöhnlichen Zahlen. Nutze .sin, .cos, .map und Arithmetik. param erzeugt einen Regler. Diese Ausdrücke können keine Crystal-if-Abfrage oder Schleife steuern.",
   "feedback": "Rückkopplung",
   "helpFeedback": "src(o0) bis src(o3) lesen das vorherige Bild. Alle vier Ausgänge werden gemeinsam aktualisiert; ihre Reihenfolge ändert das Timing nicht. Zurücksetzen leert die Puffer und setzt die Zeit zurück.",
-  "helpLimit": "Die Wasm-Ausgabe des aktuellen Compilers hat keine Garbage Collection. Crystal läuft einmal pro Build, die Animation auf der GPU. Code, Graph und Laufzeit sind begrenzt. Stopp beendet einen blockierten Worker.",
+  "helpLimit": "Die erzeugten Wasm-Programme verwenden experimentelle Garbage Collection. Crystal läuft einmal pro Build, die Animation auf der GPU. Code, Graph und Laufzeit sind begrenzt. Stopp beendet einen blockierten Worker.",
   "helpShortcuts": "Strg/⌘ + Enter: ausführen · Strg/⌘ + S: speichern · Strg/⌘ + /: kommentieren · Tab: einrücken · Escape: Dialog schließen.",
   "apiCompatibility": "Von Hydra inspiriert, kein vollständig kompatibler Port. Rauschen, Koordinaten und Modulation unterscheiden sich. Eingänge unterstützt lokale Medien, Kameras und Mikrofonanalyse. Kein JavaScript eval oder beliebiges GLSL.",
   "apiSource": "Quellen",
@@ -127,5 +127,6 @@
   "apiSearch": "API durchsuchen",
   "apiGuide": "Einstieg und Grundlagen",
   "apiCategories": "API-Kategorien",
-  "apiNoResults": "Keine passende API."
+  "apiNoResults": "Keine passende API.",
+  "instrumenting": "WebAssembly wird vorbereitet…"
 }

@@ -106,6 +106,24 @@ test('Run compiles the initial Crystal example and renders an animated canvas', 
     await page.screenshot({ path: testInfo.outputPath('compiled.png') });
 });
 
+test('generated Wasm collects memory under a heap cap before rendering', async ({ page }) => {
+    await compile(page, `
+GC.max_heap_size = 8_u64 * 1024 * 1024
+@[NoInline]
+def gc_garbage
+  Bytes.new(65536, 0xAB_u8)
+  nil
+end
+512.times { gc_garbage }
+GC.collect
+raise "GC is inactive" unless GC.prof_stats.gc_no > 1
+raise "heap limit exceeded" unless GC.stats.heap_size <= 8_u64 * 1024 * 1024
+puts "GC active"
+osc(6).kaleid(4).out
+`);
+    await expect(page.locator('#console')).toContainText('GC active');
+});
+
 test('compiled sliders change real pixels; invalid Crystal preserves the last image', async ({ page }) => {
     await compile(page, 'red = param("red", 0.1, min: 0.0, max: 1.0, step: 0.1)\nsolid(red, 0, 0).out');
     await page.locator('#pause-button').click();

@@ -52,7 +52,7 @@
   "helpSignals": "time, frame, mouse.x and mouse.y are GPU expressions, not ordinary numbers. Use .sin, .cos, .map and arithmetic. param creates a slider. Live expressions cannot control a Crystal if or loop.",
   "feedback": "Feedback",
   "helpFeedback": "src(o0) through src(o3) read the previous frame. All four outputs update together, so output order does not change timing. Reset clears their memory and resets time.",
-  "helpLimit": "The current compiler has no garbage collection. Crystal runs once per build and its instance is discarded; animation stays on the GPU. Source, graph size and execution time are bounded. Stop terminates a stuck Worker.",
+  "helpLimit": "Generated Wasm programs use experimental garbage collection. Crystal runs once per build and its instance is discarded; animation stays on the GPU. Source, graph size and execution time are bounded. Stop terminates a stuck Worker.",
   "helpShortcuts": "Ctrl/⌘ + Enter: Run · Ctrl/⌘ + S: Save · Ctrl/⌘ + /: comment · Tab: indent · Escape: close a dialog.",
   "apiCompatibility": "Hydra-inspired, not a drop-in Hydra port. Noise, shape coordinates and modulation differ. Inputs supports local media, cameras and microphone analysis. No JavaScript eval or arbitrary GLSL.",
   "apiSource": "Sources",
@@ -127,5 +127,6 @@
   "apiSearch": "Search APIs",
   "apiGuide": "Getting started & concepts",
   "apiCategories": "API categories",
-  "apiNoResults": "No matching API."
+  "apiNoResults": "No matching API.",
+  "instrumenting": "Preparing WebAssembly…"
 }

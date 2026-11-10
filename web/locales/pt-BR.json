@@ -52,7 +52,7 @@
   "helpSignals": "time, frame, mouse.x e mouse.y são expressões da GPU, não números comuns. Use .sin, .cos, .map e aritmética. param cria um controle deslizante. Essas expressões não podem controlar um if ou laço de Crystal.",
   "feedback": "Realimentação",
   "helpFeedback": "src(o0) até src(o3) leem o quadro anterior. As quatro saídas são atualizadas juntas, sem depender da ordem. Reiniciar limpa os buffers e zera o tempo.",
-  "helpLimit": "A saída Wasm do compilador atual não tem coleta de lixo. Crystal executa uma vez por compilação; a animação fica na GPU. Código, grafo e tempo de execução são limitados. Parar encerra um Worker travado.",
+  "helpLimit": "Os programas Wasm gerados usam coleta de lixo experimental. Crystal executa uma vez por compilação; a animação fica na GPU. Código, grafo e tempo de execução são limitados. Parar encerra um Worker travado.",
   "helpShortcuts": "Ctrl/⌘ + Enter: executar · Ctrl/⌘ + S: salvar · Ctrl/⌘ + /: comentar · Tab: indentar · Escape: fechar uma janela.",
   "apiCompatibility": "Inspirado no Hydra, sem compatibilidade total. Ruído, coordenadas e modulação são diferentes. Entradas aceita mídia local, câmeras e análise de microfone. Sem JavaScript eval ou GLSL arbitrário.",
   "apiSource": "Fontes",
@@ -127,5 +127,6 @@
   "apiSearch": "Buscar API",
   "apiGuide": "Introdução e conceitos",
   "apiCategories": "Categorias de API",
-  "apiNoResults": "Nenhuma API correspondente."
+  "apiNoResults": "Nenhuma API correspondente.",
+  "instrumenting": "Preparando WebAssembly…"
 }

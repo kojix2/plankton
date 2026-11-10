@@ -30,7 +30,8 @@ npm run build
 npm run dev
 ```
 
-`npm run build:cdn` uses the pinned compiler from jsDelivr instead of bundling it.
+`npm run build:cdn` uses the same pinned libgc fork commit from jsDelivr instead of bundling it.
+Generated Wasm programs use experimental Boehm garbage collection in both modes.
 For GitHub Pages, select **GitHub Actions** in the repository's Pages settings
 and push to `main`; the workflow tests, builds, and publishes the site.
 
@@ -61,8 +62,13 @@ Plankton is [MIT-licensed](LICENSE). Its DSL is inspired by
 [Hydra](https://hydra.ojack.xyz/), by Olivia Jack and contributors; this independent
 renderer does not bundle Hydra or p5.js code and is not fully compatible with Hydra.
 
-The compiler package, [`@live-codes/crystal-wasm` 0.4.0](https://github.com/live-codes/browser-crystal),
-is MIT-licensed; its bundled toolchain has separate licenses. Builds preserve the
+The compiler package is the GC-enabled fork of [`@live-codes/crystal-wasm` 0.4.0](https://github.com/kojix2/browser-crystal/tree/31842b98e395a818a9351b370f41c5f26f4861f5),
+pinned to commit `31842b9` from its `libgc` branch. `package-lock.json` verifies the
+release archive, and `package.json` records the source revision used by CDN builds.
+It is MIT-licensed; its bundled toolchain has separate licenses. Builds preserve the
 complete package in `dist/vendor/crystal/`. Retain its `LICENSE`,
 `THIRD-PARTY-NOTICES.md` and bundled license files when distributing the site.
-The CDN build uses the same package. Playwright (Apache-2.0) is used only for tests.
+The CDN build uses the same source commit and assets.
+The compiler adds BDWGC and Binaryen assets and their license notices.
+The fork retains an existing limitation for exceptions propagating through nested
+`ensure` blocks; see its `docs/GC.md`. Playwright (Apache-2.0) is used only for tests.

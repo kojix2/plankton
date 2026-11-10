@@ -81,7 +81,7 @@ try {
         const config = JSON.parse(await readFile(path.join(root, 'dist/compiler-config.json'), 'utf8'));
         if (config.mode !== 'local')
             throw new Error('End-to-end browser compilation requires npm run build (local compiler), not a CDN fixture.');
-        const result = await evaluate(`(async()=>{const app=window.__planktonTest;app.editor.value='osc(6).kaleid(4).out';await app.compile();if(document.querySelector('#view-badge').textContent!=='Compiled Crystal')throw new Error(document.querySelector('#console').textContent);app.renderer.pause();return document.querySelector('#console').textContent;})()`);
+        const result = await evaluate(`(async()=>{const app=window.__planktonTest;app.editor.value=${JSON.stringify('GC.collect\nraise "GC is inactive" unless GC.prof_stats.gc_no > 0\nosc(6).kaleid(4).out')};await app.compile();if(document.querySelector('#view-badge').textContent!=='Compiled Crystal')throw new Error(document.querySelector('#console').textContent);app.renderer.pause();return document.querySelector('#console').textContent;})()`);
         console.log('REAL browser Crystal → Wasm → GPU compile:', result);
     }
 }

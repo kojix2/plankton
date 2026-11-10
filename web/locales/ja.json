@@ -52,7 +52,7 @@
   "helpSignals": "time、frame、mouse.x、mouse.y は普通の数値ではなく GPU 上で評価する式です。.sin、.cos、.map や四則演算が使えます。param はスライダーを作ります。これらの式を Crystal の if やループの条件にはできません。",
   "feedback": "フィードバック",
   "helpFeedback": "src(o0)〜src(o3) は前のフレームを参照します。4 出力を同時に更新するため、記述順でタイミングは変わりません。リセットでバッファと時刻を初期化します。",
-  "helpLimit": "使用するコンパイラの Wasm 出力には GC がありません。Crystal はビルドごとに一度だけ実行し、映像は GPU で動かします。ソース・グラフの大きさと実行時間に上限があります。停止ボタンで Worker を終了できます。",
+  "helpLimit": "生成した Wasm プログラムでは実験的な GC を使用します。Crystal はビルドごとに一度だけ実行し、映像は GPU で動かします。ソース・グラフの大きさと実行時間に上限があります。停止ボタンで Worker を終了できます。",
   "helpShortcuts": "Ctrl/⌘ + Enter：実行 · Ctrl/⌘ + S：保存 · Ctrl/⌘ + /：コメント · Tab：字下げ · Escape：ダイアログを閉じる。",
   "apiCompatibility": "Hydraに着想を得た実装で、完全互換ではありません。noise・図形座標・変調の計算が異なります。「入力」でローカル画像・動画、カメラ、マイク解析を扱えます。JavaScript evalや任意のGLSLは扱いません。",
   "apiSource": "生成",
@@ -127,5 +127,6 @@
   "apiSearch": "APIを検索",
   "apiGuide": "使い方・基本概念",
   "apiCategories": "APIのカテゴリ",
-  "apiNoResults": "一致するAPIはありません。"
+  "apiNoResults": "一致するAPIはありません。",
+  "instrumenting": "WebAssembly を準備中…"
 }

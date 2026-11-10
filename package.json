@@ -23,9 +23,14 @@
     "test:crystal": "crystal spec"
   },
   "dependencies": {
-    "@live-codes/crystal-wasm": "0.4.0"
+    "@live-codes/crystal-wasm": "https://github.com/kojix2/browser-crystal/releases/download/libgc-31842b9/live-codes-crystal-wasm-0.4.0.tgz"
   },
   "devDependencies": {
     "@playwright/test": "1.65.0"
+  },
+  "crystalWasm": {
+    "version": "0.4.0",
+    "repository": "kojix2/browser-crystal",
+    "commit": "31842b98e395a818a9351b370f41c5f26f4861f5"
   }
 }

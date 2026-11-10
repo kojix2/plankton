@@ -52,7 +52,7 @@
   "helpSignals": "time、frame、mouse.x 和 mouse.y 是 GPU 表达式，不是普通数值。可使用 .sin、.cos、.map 和算术运算。param 创建滑块。这些表达式不能作为 Crystal 的 if 或循环条件。",
   "feedback": "反馈",
   "helpFeedback": "src(o0) 到 src(o3) 读取上一帧。四个输出同时更新，顺序不影响时间关系。重置会清空缓冲区和时间。",
-  "helpLimit": "当前编译器的 Wasm 输出没有垃圾回收。每次构建仅运行一次 Crystal，动画留在 GPU 上。源代码、图大小和执行时间均有限制。停止按钮可终止卡住的 Worker。",
+  "helpLimit": "生成的 Wasm 程序使用实验性垃圾回收。每次构建仅运行一次 Crystal，动画留在 GPU 上。源代码、图大小和执行时间均有限制。停止按钮可终止卡住的 Worker。",
   "helpShortcuts": "Ctrl/⌘ + Enter：运行 · Ctrl/⌘ + S：保存 · Ctrl/⌘ + /：注释 · Tab：缩进 · Escape：关闭对话框。",
   "apiCompatibility": "受Hydra启发，并非完全兼容的移植。噪声、图形坐标和调制方式不同。输入支持本地媒体、摄像头和麦克风分析。不支持JavaScript eval或任意GLSL。",
   "apiSource": "源",
@@ -127,5 +127,6 @@
   "apiSearch": "搜索 API",
   "apiGuide": "入门与基本概念",
   "apiCategories": "API 分类",
-  "apiNoResults": "没有匹配的 API。"
+  "apiNoResults": "没有匹配的 API。",
+  "instrumenting": "正在准备 WebAssembly…"
 }

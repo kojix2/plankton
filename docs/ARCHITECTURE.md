@@ -4,8 +4,8 @@
 Crystal source editor                 trusted static assets
          │                                   │
          ▼                                   ▼
-CompilerClient ──► dedicated module Worker ──► crystal-wasm 0.4.0
-                   Crystal compiler.wasm → object → LLD → sketch.wasm
+CompilerClient ──► dedicated module Worker ──► crystal-wasm 0.4.0 / libgc fork
+                   Crystal compiler.wasm → object → LLD → GC instrumentation → sketch.wasm
                                                              │
                                                    one-shot WASI execution
                                                              │
@@ -25,15 +25,18 @@ CompilerClient ──► dedicated module Worker ──► crystal-wasm 0.4.0
 
 ## Ownership and lifetime
 
-The compiler Worker remains idle between successful compiles so the upstream
-compiler/toolchain can be reused. Each upstream `run` executes a newly compiled
+The compiler Worker remains idle between successful compiles so the pinned
+compiler/toolchain can be reused. Each `run` executes a newly compiled
 program instance. Stop and the watchdog terminate the Worker; a later Run creates
 a new one. This is separate from the WebGL animation loop on the main thread.
 A compile error does not replace the last good graph. A late result is discarded
 if the request was superseded or source changed while it was compiling.
 
 The graph builder is normal Crystal code in `src/plankton`. It allocates node and
-expression records, serializes once, and exits. There is no JS interpreter for a
+expression records, serializes once, and exits. The generated Wasm uses experimental Boehm GC; unreachable allocations can be
+reused while building the graph. The compiler itself keeps its existing allocator.
+GC instrumentation runs after linking and before execution, and is included in
+reported build time. There is no JS interpreter for a
 subset of Crystal, no `eval` of editor source, and no per-frame callback into Wasm.
 The user can write regular Crystal helpers, loops and types, within the upstream
 WASI/toolchain limitations. Dynamic GPU expressions are explicitly represented
@@ -92,7 +95,7 @@ and links the new program before deleting the old one. Context loss is reported;
 when restored, resources and the graph are recreated (feedback contents are lost).
 
 The browser source runs in WASI, with only the host imports provided by the pinned
-upstream compiler package. This is not a security guarantee for arbitrary native
+pinned compiler package. This is not a security guarantee for arbitrary native
 libraries or future compiler versions. A Worker is not a separate-process memory
 budget. Heavy compilation or memory allocation may still stress the browser.
 Do not advertise the node caps/watchdog as a complete denial-of-service defense.
@@ -100,6 +103,13 @@ Do not advertise the node caps/watchdog as a complete denial-of-service defense.
 ## Static build and Pages
 
 `npm run build` copies the entire installed compiler package into `dist/vendor/crystal`.
+The npm dependency is a release archive from `kojix2/browser-crystal` at a fixed
+`libgc` commit, with its integrity pinned in `package-lock.json`. `package.json`
+records the expected package version, repository and commit separately from the
+archive URL. Both the local build and jsDelivr build enable
+`gc: 'boehm-experimental'` using the shared compiler options module; the CDN
+URL uses the full commit rather than a moving branch name. Build metadata records
+that revision and GC mode.
 The upstream loader verifies asset bytes against its embedded receipts and inflates
 `.gz` itself; no server-side gzip configuration, credentials or special response
 headers are needed. All application URLs are relative and tested at `/repository/`

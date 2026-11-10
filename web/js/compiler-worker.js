@@ -1,4 +1,5 @@
 import { LIMITS, parseProgramOutput } from './graph.js';
+import { COMPILER_OPTIONS } from './compiler-options.js';
 let compiler, sourceFiles, config;
 let active = false;
 let requestId;
@@ -24,10 +25,11 @@ async function initialize() {
         throw new Error('Compiler assets must share the compiler origin.');
     const { createCompiler } = await import(entry.href);
     compiler = await createCompiler({
+        ...COMPILER_OPTIONS,
         baseUrl: assets.href,
         onProgress: (fraction) => send({ type: 'progress', fraction }),
         onStatus: (detail) => {
-            const stage = ['compiling', 'linking', 'running'].includes(detail) ? detail : 'loading';
+            const stage = ['compiling', 'linking', 'instrumenting', 'running'].includes(detail) ? detail : 'loading';
             send({ type: 'status', stage, detail: String(detail).slice(0, 240) });
         },
     });

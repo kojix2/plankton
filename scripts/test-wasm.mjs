@@ -1,6 +1,7 @@
 // This test must actually compile Crystal. Missing dependencies are errors, not
 // skips, and preset JSON is never accepted as a substitute for a compiler result.
 import { createCompiler } from '@live-codes/crystal-wasm';
+import { COMPILER_OPTIONS } from '../web/js/compiler-options.js';
 import { readFile, readdir } from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import path from 'node:path';
@@ -25,7 +26,8 @@ async function sources(directory, prefix = '') {
     }
 }
 await sources(path.join(root, 'src'));
-const compiler = await createCompiler();
+const compiler = await createCompiler(COMPILER_OPTIONS);
+assert.equal(compiler.gc, COMPILER_OPTIONS.gc);
 let count = 0;
 try {
     const run = async (source) => compiler.run('require "./plankton"\nrequire "./sketch"\nPlankton.emit\n', '', { files: { ...files, 'sketch.cr': source } });
@@ -36,6 +38,8 @@ try {
         count++;
         return parseProgramOutput(result.stdout).graph;
     };
+    await check('GC.collect\nraise "GC is inactive" unless GC.prof_stats.gc_no > 0\nraise "GC heap is empty" unless GC.stats.heap_size > 0\nosc.out\n');
+    console.log('Generated Wasm uses Boehm GC and reports collection/heap statistics.');
     const manifest = JSON.parse(await readFile(path.join(root, 'examples/manifest.json'), 'utf8'));
     for (const example of manifest) {
         const graph = await check(await readFile(path.join(root, example.source), 'utf8'));
